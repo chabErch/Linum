@@ -18,8 +18,10 @@ class GridCell:
 
         self.left_border = False
         self.right_border = False
+
         self.left_border_char = Border(t=True, b=True)
         self.right_border_char = Border(t=True, b=True)
+
         self.fill_char = Border()
 
     def __eq__(self, other):
@@ -38,8 +40,8 @@ class GridCell:
             raise TypeError("Border lengths must be equal for |: {} != {}".format(self.cell_width, other.cell_width))
 
         gc = GridCell()
-        self_borders = self.prerender()
-        other_borders = other.prerender()
+        self_borders = self.pre_render()
+        other_borders = other.pre_render()
         for i in range(self.cell_width):
             b = self_borders[i] + other_borders[i]
             gc.content.append(b)
@@ -54,7 +56,7 @@ class GridCell:
 
         return gc
 
-    def prerender(self) -> List[Border]:
+    def pre_render(self) -> List[Border]:
         """
         Предварительный рендер ячейки.
         Возвращает список границ без правой и левой границ.
@@ -81,7 +83,7 @@ class GridCell:
 
         :return:
         """
-        borders = self.prerender()
+        borders = self.pre_render()
 
         # Рендеримм содержимое ячейки
         borders_str = [str(borders[i]) for i in range(self.cell_width)]

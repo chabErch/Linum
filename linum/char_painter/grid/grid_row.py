@@ -69,14 +69,14 @@ class GridRow:
         if not self.cells:
             return []
         # Сливаем все ячейки и их границы в массив границ
-        borders = self.cells[0].prerender()
+        borders = self.cells[0].pre_render()
         for i in range(len(self.cells) - 1):
             if self.inner_borders:
                 # Сливаем соседние границы ячеек в одну границу
                 lb = self.cells[i].right_border_char if self.cells[i].right_border else Border()
                 rb = self.cells[i + 1].left_border_char if self.cells[i + 1].left_border else Border()
                 borders.append(lb + rb + self.inner_border_char)
-            borders += self.cells[i + 1].prerender()
+            borders += self.cells[i + 1].pre_render()
         return borders
 
     def render(self) -> str:

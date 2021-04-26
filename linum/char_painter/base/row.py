@@ -9,7 +9,7 @@ class Row:
 
     def __init__(self, cells: Optional[List[Cell]] = None):
         """
-        Строка, которая умеет в ASCII.
+        Строка.
 
         :param cells: список ячеек для отображения.
         """
@@ -18,9 +18,11 @@ class Row:
         self.left_border = False
         self.right_border = False
         self.inner_borders = False
+
         self.left_border_char = Border(t=True, b=True)
         self.right_border_char = Border(t=True, b=True)
         self.inner_border_char = Border(t=True, b=True)
+
         self.align: Align = Align.CENTER
 
     def __repr__(self):
@@ -60,17 +62,54 @@ class Row:
         elif isinstance(cells, Cell):
             self.cells.append(cells)
 
-    def pre_render(self) -> List[str]:
+    def pre_render(self) -> Cell:
         """
         Предварительный рендер содержимого строки.
-        Возвращает список отрендеренных ячеек.
+        Возвращает ячейку в которую объединилась строка.
 
-        :return: List[str]
+        :return: str
         """
-        cells_str = []
-        for c in self.cells:
-            cells_str += [c.render()]
-        return cells_str
+        if len(self.cells) <= 0:
+            cell = Cell()
+            cell.left_border = self.left_border
+            cell.left_border_char = self.left_border_char
+            cell.right_border = self.right_border
+            cell.right_border_char = self.right_border_char
+            return cell
+
+        cells = self.cells
+        content = ''
+        for i in range(len(cells) - 1):
+            content += cells[i].pre_render()
+
+            border = ''
+            # Сливаем соседние границы в одну
+            if self.inner_borders or cells[i].right_border or cells[i + 1].left_border:
+                border = Border()
+                if self.inner_borders:
+                    border += self.inner_border_char
+                if cells[i].right_border:
+                    border += cells[i].right_border_char
+                if cells[i + 1].left_border:
+                    border += cells[i + 1].left_border_char
+            content += str(border)
+        content += cells[-1].pre_render()
+
+        cell = Cell(len(content), content)
+
+        # Определяем левую границу результирующей ячейки
+        cell.left_border = self.left_border or cells[0].left_border
+        cell.left_border_char = self.left_border_char
+        if cells[0].left_border:
+            self.left_border_char += cells[0].left_border_char
+
+        # Определяем правую границу результирующей ячейки
+        cell.right_border = self.right_border or cells[-1].right_border
+        cell.right_border_char = self.right_border_char
+        if cells[-1].right_border:
+            self.right_border_char += cells[-1].right_border_char
+
+        return cell
 
     def render(self) -> str:
         """
@@ -78,41 +117,27 @@ class Row:
 
         :return: str
         """
-        # Рендерим ячеки
-        cells_str = self.pre_render()
+        cell = self.pre_render()
+        return cell.render()
 
-        # Рисуем внутренние границы
-        ch = str(self.inner_border_char) if self.inner_borders else ''
-        s = ch.join(cells_str)
-
-        # Рисуем левую границу
-        if self.left_border:
-            s = str(self.left_border_char) + s
-
-        # Рисуем правую границу
-        if self.right_border:
-            s += str(self.right_border_char)
-
-        return s
-
-    def merge(self, content='', align: Align = Align.CENTER) -> Cell:
+    def merge(self, content: Optional[str] = None, align: Align = Align.CENTER) -> Cell:
         """
         Объединяет все ячейки строки в одну.
+        Если указанно содержимое то оно будет вставлено в результирующую ячейку.
+        Если содержимое не указано, то результирующая ячейка будет содержать
+        строковое представление строки без внешних границ.
+
+        Значения левой и правой границ наследуются от строки.
 
         :param content: содержимое для созданной ячейки
-        :param align:
+        :param align: выравнивание
         :return: Cell
         """
-        width = len(self)
-        if self.left_border:
-            width -= 1
-        if self.right_border:
-            width -= 1
-        cell = Cell(width)  # todo 2: Добавить слияние содержимого
-        cell.content = content
+        cell = self.pre_render()
+
+        if content is not None:
+            cell.content = content
+
         cell.align = align
-        cell.left_border = self.left_border
-        cell.right_border = self.right_border
-        cell.left_border_char = self.left_border_char
-        cell.right_border_char = self.right_border_char
+
         return cell

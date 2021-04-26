@@ -4,6 +4,7 @@ from typing import List
 from linum.char_painter.base.border import Border
 from linum.char_painter.base.cell import Cell
 from linum.char_painter.base.row import Row
+from linum.char_painter.calendar.space_row import SpaceRow
 from linum.char_painter.calendar.task_part_view import TaskPartView
 from linum.char_painter.grid.grid_cell import GridCell
 from linum.char_painter.grid.grid_row import GridRow
@@ -29,20 +30,18 @@ class LayerView:
         self.left_border = False
         self.right_border = False
         self.inner_borders = False
+        self.month_inner_borders = True
 
         self.left_border_char = Border(t=True, b=True)
         self.right_border_char = Border(t=True, b=True)
         self.inner_border_char = Border(t=True, b=True)
+        self.month_inner_border_char = Border(t=True, b=True)
 
-    def get_middle_segment(self) -> str:
-        """
-        Возвращает средний сегмент слоя с кусочками задач.
-
-        :return: str
-        """
-        layer = self._trim_layer()
+    def _get_middle_segment_for_period(self, start_date: date, length: int) -> Cell:
+        layer = self._trim_layer(start_date, length)
 
         row = Row()
+
         previous_date = self.start_date
         part = None
 
@@ -57,27 +56,66 @@ class LayerView:
             tpv = TaskPartView(part)
             tpv.cell_width = self.cell_width
             tpv.inner_borders = self.inner_borders
-            row.append(tpv.as_cell())
+            tpv.month_inner_borders = self.month_inner_borders
+            row.append(tpv.pre_render_middle_segment())
 
         # Создаем пустые ячейки после последней задачи
-        if part:
-            count = (self.start_date + timedelta(self.length) - part.day_after).days
-            post_cells = self._get_empty_cells(count)
-            row.append(post_cells)
+        d = start_date if part is None else part.day_after
+        count = (start_date + timedelta(length) - d).days
+        post_cells = self._get_empty_cells(count)
+        row.append(post_cells)
 
-        # Выставляем внутренние границы
-        row.inner_borders = self.inner_borders
-        row.inner_border_char = self.inner_border_char
+        return row.merge()
 
-        # Выставляем левую границу
+    def pre_render_middle_segment(self) -> Cell:
+        layer = self._trim_layer(self.start_date, self.length)
+
+        row = Row()
+        previous_date = self.start_date
+
+        for part in layer.parts:
+            # Создаем ячейки между текущей и предыдущей задачами
+            count = (part.start_date - previous_date).days
+            sr = SpaceRow(previous_date, count)
+            sr.cell_width = self.cell_width
+            sr.month_inner_borders = self.month_inner_borders
+            sr.inner_borders = self.inner_borders
+            if len(sr.render()) > 0:
+                row.append(sr.pre_render())
+
+            # Создаем ячейку потока слиянием нескольких ячеек
+            tpv = TaskPartView(part)
+            tpv.cell_width = self.cell_width
+            tpv.inner_borders = self.inner_borders
+            tpv.month_inner_borders = self.month_inner_borders
+            row.append(tpv.pre_render_middle_segment())
+
+            previous_date = part.day_after
+
+        # Создаем пустые ячейки после последней задачи
+        if previous_date < self.start_date + timedelta(self.length):
+            count = (self.start_date + timedelta(self.length) - previous_date).days
+            sr = SpaceRow(previous_date, count)
+            sr.cell_width = self.cell_width
+            sr.month_inner_borders = self.month_inner_borders
+            sr.inner_borders = self.inner_borders
+            row.append(sr.pre_render())
+
         row.left_border = self.left_border
         row.left_border_char = self.left_border_char
-
-        # Выставляем правую границу
         row.right_border = self.right_border
         row.right_border_char = self.right_border_char
 
-        return row.render()
+        return row.merge()
+
+    def render_middle_segment(self) -> str:
+        """
+        Возвращает средний сегмент слоя с кусочками задач за указанный период.
+
+        :return: str
+        """
+        cell = self.pre_render_middle_segment()
+        return cell.render()
 
     def get_outline(self, is_top_outline: bool = True) -> str:
         """
@@ -86,7 +124,7 @@ class LayerView:
         :param is_top_outline:
         :return:
         """
-        layer = self._trim_layer()
+        layer = self._trim_layer(self.start_date, self.length)
 
         grid_row = GridRow()
         previous_date = self.start_date
@@ -129,14 +167,14 @@ class LayerView:
 
         return grid_row.render()
 
-    def _trim_layer(self) -> Layer:
+    def _trim_layer(self, start_date: date, length: int) -> Layer:
         """
         Обрезает части слоя, находящиеся вне заданного периода отображения.
 
         :return: Layer
         """
-        _, layer = self.layer.split(self.start_date)
-        layer, _ = layer.split(self.start_date + timedelta(self.length))
+        _, layer = self.layer.split(start_date)
+        layer, _ = layer.split(start_date + timedelta(length))
         return layer
 
     def _get_empty_cells(self, count: int) -> List[Cell]:
@@ -158,3 +196,4 @@ class LayerView:
         """
         cells = [GridCell(self.cell_width) for _ in range(count)]
         return cells
+

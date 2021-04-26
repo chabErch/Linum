@@ -2,7 +2,7 @@ from datetime import date
 
 from linum.char_painter.base.border import Border
 from linum.char_painter.calendar.header.days_row import DaysRow
-from linum.char_painter.calendar.header.month_row import MonthRow
+from linum.char_painter.calendar.header.months_row import MonthsRow
 from linum.char_painter.calendar.header.weekdays_row import WeekdaysRow
 
 
@@ -31,7 +31,7 @@ class Header:
         self.inner_border_char = Border(t=True, b=True)
 
     def render_months(self) -> str:
-        mr = MonthRow(self.start_date, self.length)
+        mr = MonthsRow(self.start_date, self.length)
         mr.cell_width = self.cell_width
 
         # Устанавливаем левую границу
@@ -44,9 +44,10 @@ class Header:
 
         # Устанавливаем границы между ячейками
         mr.inner_borders = self.inner_borders
+        mr.inner_border_char = self.inner_border_char
 
         # Устанавливаем границы между месяцами
-        mr.month_inner_border = self.month_inner_borders
+        mr.month_inner_borders = self.month_inner_borders
         mr.month_inner_border_char = self.month_inner_border_char
 
         return mr.render()

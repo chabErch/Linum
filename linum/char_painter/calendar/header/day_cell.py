@@ -1,10 +1,10 @@
 from datetime import date
 from typing import Any, Optional
 
-from linum.char_painter.base.cell import Cell
+from linum.char_painter.base.date_cell import DateCell
 
 
-class Day(Cell):
+class DayCell(DateCell):
 
     def __init__(self, cell_width: int = 0, date_: Optional[date] = None):
         """
@@ -13,8 +13,7 @@ class Day(Cell):
         :param cell_width: ширина ячейки в символах;
         :param date_: дата, которую необходимо отобразить.
         """
-        self.date = date_
-        super().__init__(cell_width)
+        super().__init__(cell_width, date_)
 
     def __repr__(self):
         return "<Day: {}>".format(self.content)
@@ -39,12 +38,3 @@ class Day(Cell):
         :param any_: Any
         """
         pass
-
-    def pre_render(self) -> str:
-        """
-        Предварительный рендер содержимого ячейки.
-        Возвращает строковое представление дня месяца ячейки.
-
-        :return: str
-        """
-        return self.content

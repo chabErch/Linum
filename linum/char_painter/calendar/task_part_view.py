@@ -2,6 +2,7 @@ from copy import copy
 
 from linum.char_painter.base.border import Border
 from linum.char_painter.base.cell import Cell
+from linum.char_painter.base.date_row import DateRow
 from linum.char_painter.base.row import Row
 from linum.char_painter.enums import Align
 from linum.char_painter.grid.grid_cell import GridCell
@@ -9,41 +10,33 @@ from linum.char_painter.grid.grid_row import GridRow
 from linum.task_part import TaskPart
 
 
-class TaskPartView:
+class TaskPartView(DateRow):
 
     def __init__(self, task_part: TaskPart):
         """
-        Представление среднего сегмента кусочка задачи.
+        Представление кусочка задачи.
 
         :param task_part: кусочек задачи
         """
         self.task_part = task_part
+        super().__init__(task_part.start_date, task_part.length)
 
-        self.cell_width = 4
-        self.inner_borders = False
-
-    def as_cell(self) -> Cell:
+    def pre_render_middle_segment(self) -> Cell:
         """
         Возвращает средний сегмент в виде ячейки.
 
         :return: Cell
         """
-        # Создаем строку из нужного количества ячеек
-        part_row = Row([Cell(self.cell_width)] * self.task_part.length)
-
-        # Учитываем внутренние границы
-        part_row.inner_borders = self.inner_borders
-
-        # Сливаем строку в одну ячейку
-        part_cell = part_row.merge(self.task_part.task.name, Align.LEFT)
-
-        # Имитируем границы ячейки
+        cell = self.merge(self.task_part.task.name)
+        cell.right_border = True
+        cell.left_border = True
+        cell.align = Align.LEFT
         if not self.inner_borders:
-            part_cell.left_border = True
-            part_cell.right_border = True
-            part_cell.cell_width -= 2
+            cell.cell_width -= 2
+            content = cell.render()
+            cell = Cell(len(content), content)
 
-        return part_cell
+        return cell
 
     def get_outline_cell(self, is_top_outline=True) -> GridCell:
         """
