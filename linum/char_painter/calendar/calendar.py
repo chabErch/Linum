@@ -41,6 +41,7 @@ class Calendar:
         # Формируем представление слоев
         llv = LayerListView(self.layer_list, start_date, length)
         llv.cell_width = self.context.cell_width
+        llv.month_inner_borders = self.context.month_inner_borders
         llv.inner_borders = self.context.inner_borders
         llv.left_border = self.context.left_border
         llv.right_border = self.context.right_border

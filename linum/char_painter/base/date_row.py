@@ -10,7 +10,7 @@ class DateRow(Row):
 
     def __init__(self, start_date: date, length: int):
         """
-        Строка работающая с датами
+        Строка работающая с датами.
 
         :param start_date:
         :param length:

@@ -28,7 +28,7 @@ class Cell:
         self.align: Align = Align.CENTER
 
     def __repr__(self):
-        return "<Cell: '{}' with with {}>".format(self.content, self.cell_width)
+        return "<Cell: '{}' with width {}>".format(self.content, self.cell_width)
 
     def __len__(self):
         return len(self.render())

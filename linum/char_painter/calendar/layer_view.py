@@ -37,36 +37,6 @@ class LayerView:
         self.inner_border_char = Border(t=True, b=True)
         self.month_inner_border_char = Border(t=True, b=True)
 
-    def _get_middle_segment_for_period(self, start_date: date, length: int) -> Cell:
-        layer = self._trim_layer(start_date, length)
-
-        row = Row()
-
-        previous_date = self.start_date
-        part = None
-
-        for part in layer.parts:
-            # Создаем ячейки между текущей и предыдущей задачами
-            count = (part.start_date - previous_date).days
-            row.append(self._get_empty_cells(count))
-
-            previous_date = part.day_after
-
-            # Создаем ячейку потока слиянием нескольких ячеек
-            tpv = TaskPartView(part)
-            tpv.cell_width = self.cell_width
-            tpv.inner_borders = self.inner_borders
-            tpv.month_inner_borders = self.month_inner_borders
-            row.append(tpv.pre_render_middle_segment())
-
-        # Создаем пустые ячейки после последней задачи
-        d = start_date if part is None else part.day_after
-        count = (start_date + timedelta(length) - d).days
-        post_cells = self._get_empty_cells(count)
-        row.append(post_cells)
-
-        return row.merge()
-
     def pre_render_middle_segment(self) -> Cell:
         layer = self._trim_layer(self.start_date, self.length)
 
@@ -80,7 +50,7 @@ class LayerView:
             sr.cell_width = self.cell_width
             sr.month_inner_borders = self.month_inner_borders
             sr.inner_borders = self.inner_borders
-            if len(sr.render()) > 0:
+            if (not self.inner_borders and self.month_inner_borders) or sr.pre_render().cell_width > 0:
                 row.append(sr.pre_render())
 
             # Создаем ячейку потока слиянием нескольких ячеек

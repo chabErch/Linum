@@ -24,10 +24,12 @@ class LayerListView:
         self.left_border = False
         self.right_border = False
         self.inner_borders = False
+        self.month_inner_borders = False
 
         self.left_border_char = Border(t=True, b=True)
         self.right_border_char = Border(t=True, b=True)
         self.inner_border_char = Border(t=True, b=True)
+        self.month_inner_border_char = Border(t=True, b=True)
 
     def render(self) -> str:
         """
@@ -47,6 +49,10 @@ class LayerListView:
             # Формируем представление слоя
             lv = LayerView(layer, self.start_date, self.length)
             lv.cell_width = self.cell_width
+
+            # Устанавливаем границу между месяцами
+            lv.month_inner_borders = self.month_inner_borders
+            lv.month_inner_border_char = self.month_inner_border_char
 
             # Устанавливаем левую границу
             lv.left_border = self.left_border
