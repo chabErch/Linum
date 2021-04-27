@@ -1,11 +1,11 @@
 from datetime import date, timedelta
 from typing import List, Tuple
 
-from linum.char_painter.calendar.header.header import Header
-from linum.char_painter.calendar.layer_list_view import LayerListView
-from linum.context import Context
-from linum.helper import days_in_month
-from linum.layer_list import LayerList
+from linum import Context
+from linum import LayerList
+from linum.char_painter.calendar.header import Header
+from linum.char_painter.calendar.views import LayerListView
+from linum.helper import days_in_month, split_by_months
 
 
 class Calendar:
@@ -41,6 +41,7 @@ class Calendar:
         # Формируем представление слоев
         llv = LayerListView(self.layer_list, start_date, length)
         llv.cell_width = self.context.cell_width
+        llv.month_inner_borders = self.context.month_inner_borders
         llv.inner_borders = self.context.inner_borders
         llv.left_border = self.context.left_border
         llv.right_border = self.context.right_border
@@ -56,8 +57,12 @@ class Calendar:
         :return:
         """
         rendered_rows = []
-        for date_, length in self._get_date_limits():
-            rendered_rows.append(self.render_row(date_, length))
+        months = split_by_months(self.context.start_date, self.context.length)
+        for i in range(0, len(months), self.context.months_in_row):
+            m = months[i:i + self.context.months_in_row]
+            d, _ = m[0]
+            days = sum([d for _, d in m])
+            rendered_rows.append(self.render_row(d, days))
 
         s = '\n\n'.join(rendered_rows)
         return s

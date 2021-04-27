@@ -1,7 +1,8 @@
 from typing import Any
 
-from linum.char_painter.base.border import Border
 from linum.char_painter.enums import Align
+from linum.helper import supp_content, trim_content
+from .border import Border
 
 
 class Cell:
@@ -18,13 +19,16 @@ class Cell:
 
         self.left_border = False
         self.right_border = False
+
         self.left_border_char = Border(t=True, b=True)
         self.right_border_char = Border(t=True, b=True)
+
         self.fill_char = Border()
+
         self.align: Align = Align.CENTER
 
     def __repr__(self):
-        return "<Cell: '{}'>".format(self.content)
+        return "<Cell: '{}' with width {}>".format(self.content, self.cell_width)
 
     def __len__(self):
         return len(self.render())
@@ -58,7 +62,10 @@ class Cell:
 
         :return: str
         """
-        return str(self.content)
+        content = str(self.content)
+        content = supp_content(content, self.cell_width, self.align, str(self.fill_char))
+        content = trim_content(content, self.cell_width)
+        return content
 
     def render(self) -> str:
         """
@@ -67,26 +74,6 @@ class Cell:
         :return: str
         """
         s = self.pre_render()
-
-        # Обрезаем содержимое, если не влезает в ячейку.
-        cell_width = max(0, self.cell_width)
-        if len(s) > cell_width:
-            s = s[:cell_width - 1] + "…"
-        if cell_width == 0:
-            s = ''
-
-        # Выравниваем содержимое.
-        if self.align is Align.LEFT:
-            while len(s) < cell_width:
-                s += str(self.fill_char)
-        elif self.align is Align.RIGHT:
-            while len(s) < cell_width:
-                s = str(self.fill_char) + s
-        elif self.align is Align.CENTER:
-            position = int(cell_width / 2 - len(s) / 2)
-            prefix = str(self.fill_char) * position
-            postfix = str(self.fill_char) * (cell_width - len(prefix) - len(s))
-            s = prefix + s + postfix
 
         # Рисуем границы ячейки.
         if self.left_border:

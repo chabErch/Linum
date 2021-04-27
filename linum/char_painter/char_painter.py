@@ -1,9 +1,9 @@
 from typing import List
 
-from linum.char_painter.calendar.calendar import Calendar
-from linum.composer import Composer
-from linum.context import Context
-from linum.task import Task
+from linum import Composer
+from linum import Context
+from linum import Task
+from linum.char_painter.calendar import Calendar
 
 
 class CharPainter:
