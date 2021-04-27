@@ -1,7 +1,7 @@
 from datetime import date
 from unittest import TestCase
 
-from linum.char_painter.calendar.space import SpaceRow
+from linum.char_painter.calendar.space.space_row import SpaceRow
 
 
 class TestRender(TestCase):

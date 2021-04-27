@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from linum import Task
 from linum.char_painter.base.cell import Cell
-from linum.char_painter.calendar.task_part_view import TaskPartView
+from linum.char_painter.calendar.views.task_part_view import TaskPartView
 from linum.char_painter.enums import Align
 from linum.task_part import TaskPart
 

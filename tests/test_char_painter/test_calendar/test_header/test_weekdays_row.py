@@ -1,7 +1,7 @@
 from datetime import date
 from unittest import TestCase
 
-from linum.char_painter.calendar.header.weekdays_row import WeekdaysRow
+from linum.char_painter.calendar.header.weekday.weekdays_row import WeekdaysRow
 
 
 class TestWeekdaysRow(TestCase):

@@ -1,9 +1,9 @@
 from datetime import date, timedelta
 from typing import List, Any
 
-from linum.char_painter.base.border import Border
-from linum.char_painter.base.row import Row
-from linum.char_painter.base.date_cell import DateCell
+from .border import Border
+from .date_cell import DateCell
+from .row import Row
 
 
 class DateRow(Row):

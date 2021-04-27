@@ -1,7 +1,7 @@
 from datetime import date
 
-from linum.char_painter.base.date_row import DateRow
-from linum.char_painter.calendar.header.weekday import Weekday
+from linum.char_painter.base import DateRow
+from .weekday_cell import WeekdayCell
 
 
 class WeekdaysRow(DateRow):
@@ -20,4 +20,4 @@ class WeekdaysRow(DateRow):
 
     @property
     def date_cell_class(self):
-        return Weekday
+        return WeekdayCell

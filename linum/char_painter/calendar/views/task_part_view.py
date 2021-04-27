@@ -1,9 +1,9 @@
-from linum.char_painter.base.border import Border
-from linum.char_painter.base.cell import Cell
-from linum.char_painter.base.date_row import DateRow
+from linum import TaskPart
+from linum.char_painter.base import Border
+from linum.char_painter.base import Cell
+from linum.char_painter.base import DateRow
 from linum.char_painter.calendar.grid import GridRow
 from linum.char_painter.enums import Align
-from linum.task_part import TaskPart
 
 
 class TaskPartView(DateRow):

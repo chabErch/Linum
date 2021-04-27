@@ -1,1 +1,1 @@
-from linum.char_painter.char_painter import CharPainter
+from .char_painter import CharPainter

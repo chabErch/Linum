@@ -31,8 +31,8 @@ print(cp.render())
 # Tasks for 4 months
 c.start_date = date(2020, 1, 1)
 c.finish_date = date(2020, 5, 1)
-c.inner_borders = False
-c.month_inner_borders = True
+c.inner_borders = True
+c.month_inner_borders = False
 cp = CharPainter(tasks, c)
 print(cp.render())
 

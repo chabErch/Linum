@@ -1,11 +1,11 @@
 from datetime import date, timedelta
 from typing import List, Tuple
 
-from linum.char_painter.calendar.header.header import Header
-from linum.char_painter.calendar.layer_list_view import LayerListView
-from linum.context import Context
+from linum import Context
+from linum import LayerList
+from linum.char_painter.calendar.header import Header
+from linum.char_painter.calendar.views import LayerListView
 from linum.helper import days_in_month, split_by_months
-from linum.layer_list import LayerList
 
 
 class Calendar:
@@ -59,7 +59,7 @@ class Calendar:
         rendered_rows = []
         months = split_by_months(self.context.start_date, self.context.length)
         for i in range(0, len(months), self.context.months_in_row):
-            m = months[i:i+self.context.months_in_row]
+            m = months[i:i + self.context.months_in_row]
             d, _ = m[0]
             days = sum([d for _, d in m])
             rendered_rows.append(self.render_row(d, days))

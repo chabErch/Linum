@@ -1,9 +1,9 @@
 from datetime import date
 from typing import List, Any
 
-from linum.char_painter.base.date_row import DateRow
-from linum.char_painter.calendar.header.month_cell import MonthCell
+from linum.char_painter.base import DateRow
 from linum.helper import split_by_months
+from .month_cell import MonthCell
 
 
 class MonthsRow(DateRow):

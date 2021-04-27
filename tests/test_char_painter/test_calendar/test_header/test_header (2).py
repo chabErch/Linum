@@ -8,12 +8,12 @@ from linum.char_painter.calendar.header.header import Header
 class TestHeader(TestCase):
 
     def test_render(self):
-        # One day header
+        # One day test_header
         h = Header(date(2020, 1, 1), 1)
         h.cell_width = 3
         self.assertEqual(header[1], h.render())
 
-        # Two days header
+        # Two days test_header
         h = Header(date(2020, 1, 1), 2)
         h.cell_width = 3
         self.assertEqual(header[2], h.render())

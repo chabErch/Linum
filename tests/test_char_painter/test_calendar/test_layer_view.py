@@ -2,7 +2,7 @@ from datetime import date
 from unittest import TestCase
 
 from linum import Task
-from linum.char_painter.calendar.layer_view import LayerView
+from linum.char_painter.calendar.views.layer_view import LayerView
 from linum.layer import Layer
 from linum.task_part import TaskPart
 

@@ -1,8 +1,8 @@
 from typing import List, Union, Optional
 
-from linum.char_painter.base.border import Border
-from linum.char_painter.base.cell import Cell
 from linum.char_painter.enums import Align
+from .border import Border
+from .cell import Cell
 
 
 class Row:

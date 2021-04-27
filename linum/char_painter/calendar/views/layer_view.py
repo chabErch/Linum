@@ -1,14 +1,14 @@
 from datetime import date, timedelta
 from typing import List
 
-from linum.char_painter.base.border import Border
-from linum.char_painter.base.cell import Cell
-from linum.char_painter.base.row import Row
-from linum.char_painter.calendar.space.space_row import SpaceRow
-from linum.char_painter.calendar.task_part_view import TaskPartView
-from linum.char_painter.calendar.grid.grid_cell import GridCell
+from linum import Layer
+from linum.char_painter.base import Border
+from linum.char_painter.base import Cell
+from linum.char_painter.base import Row
+from linum.char_painter.calendar.grid import GridCell
 from linum.char_painter.calendar.grid import GridRow
-from linum.layer import Layer
+from linum.char_painter.calendar.space import SpaceRow
+from .task_part_view import TaskPartView
 
 
 class LayerView:
@@ -211,4 +211,3 @@ class LayerView:
         """
         cells = [GridCell(self.cell_width) for _ in range(count)]
         return cells
-
