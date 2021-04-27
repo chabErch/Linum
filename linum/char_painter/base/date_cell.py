@@ -1,7 +1,6 @@
 from datetime import date
-from typing import Any, Optional, List
+from typing import Any, Optional
 
-from linum.char_painter.base.border import Border
 from linum.char_painter.base.cell import Cell
 
 

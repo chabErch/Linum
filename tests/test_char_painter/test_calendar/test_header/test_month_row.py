@@ -1,7 +1,6 @@
 from datetime import date
 from unittest import TestCase
 
-from linum.char_painter.calendar.header.month_cell import MonthCell
 from linum.char_painter.calendar.header.months_row import MonthsRow
 
 
@@ -39,4 +38,3 @@ class TestMonthRow(TestCase):
         mr = MonthsRow(date(2020, 1, 30), 4)
         mr.right_border = True
         self.assertEqual('January…Februar…│', mr.render())
-

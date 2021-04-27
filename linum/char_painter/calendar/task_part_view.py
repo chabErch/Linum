@@ -1,12 +1,8 @@
-from copy import copy
-
 from linum.char_painter.base.border import Border
 from linum.char_painter.base.cell import Cell
 from linum.char_painter.base.date_row import DateRow
-from linum.char_painter.base.row import Row
+from linum.char_painter.calendar.grid import GridRow
 from linum.char_painter.enums import Align
-from linum.char_painter.grid.grid_cell import GridCell
-from linum.char_painter.grid.grid_row import GridRow
 from linum.task_part import TaskPart
 
 
@@ -38,41 +34,26 @@ class TaskPartView(DateRow):
 
         return cell
 
-    def get_outline_cell(self, is_top_outline=True) -> GridCell:
+    def pre_render_outline(self, is_top_outline=True) -> Cell:
         """
         Возвращает строковое представление верхнего или нижнего сегмента кусочка задачи.
 
         :param is_top_outline: верхняя или нижняя часть
         :return: GridCell
         """
-        # Подготавливаем шаблонную ячейку для заполнения ею строки
-        c = GridCell(self.cell_width)
-        c.fill_char = Border(l=True, r=True)
+        gr = GridRow(self.start_date, self.length, is_top_outline)
+        gr.cell_width = self.cell_width
+        gr.inner_borders = self.inner_borders
+        gr.left_border = True
+        gr.right_border = True
+        cell = gr.merge()
+        if self.inner_borders:
+            cell.left_border_char += Border(t=is_top_outline, b=not is_top_outline)
+            cell.right_border_char += Border(t=is_top_outline, b=not is_top_outline)
+        if not self.inner_borders:
+            cell.content = cell.content[:-2]
+            cell.cell_width -= 2
+            content = cell.render()
+            cell = Cell(len(content), content)
 
-        # Заполняем строку шаблонными ячейками
-        part_row = GridRow([copy(c) for _ in range(self.task_part.length)])
-
-        # Устанавливаем внутренние границы
-        inner_border_char = Border(t=is_top_outline, b=not is_top_outline, l=True, r=True)
-        part_row.inner_borders = self.inner_borders
-        part_row.inner_border_char = inner_border_char
-
-        # Устанавливаем левую границу
-        part_row.left_border = True
-        part_row.left_border_char = Border(t=True, r=True, b=True)
-
-        # Устанавливаем правую границу
-        part_row.right_border = True
-        part_row.right_border_char = Border(t=True, l=True, b=True)
-
-        # Сливаем строку в одну ячейку
-        part_cell = part_row.merge()
-
-        # Имитируем границу задачи если границы не рисуются сами
-        if not self.inner_borders and part_cell.cell_width > 0:
-            part_cell.content[0] -= Border(l=True)
-            part_cell.content[0] += Border(b=is_top_outline, t=not is_top_outline)
-            part_cell.content[-1] -= Border(r=True)
-            part_cell.content[-1] += Border(b=is_top_outline, t=not is_top_outline)
-
-        return part_cell
+        return cell

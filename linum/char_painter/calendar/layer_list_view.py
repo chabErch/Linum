@@ -66,9 +66,9 @@ class LayerListView:
             lv.inner_borders = self.inner_borders
             lv.inner_border_char = self.inner_border_char
 
-            lines.append(lv.get_outline(is_top_outline=True))
+            lines.append(lv.render_outline(is_top_outline=True))
             lines.append(lv.render_middle_segment())
-            lines.append(lv.get_outline(is_top_outline=False))
+            lines.append(lv.render_outline(is_top_outline=False))
 
         s = '\n'.join(lines)
         return s
