@@ -15,7 +15,7 @@ class TaskPartView(DateRow):
         :param task_part: кусочек задачи
         """
         self.task_part = task_part
-        super().__init__(task_part.start_date, task_part.length)
+        super().__init__(task_part.start, task_part.length)
 
     def pre_render_middle_segment(self) -> Cell:
         """

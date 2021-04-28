@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 from typing import List, Tuple
 
-from linum import Context
+from linum import Context, CharPainterContext
 from linum import LayerList
 from linum.char_painter.calendar.header import Header
 from linum.char_painter.calendar.views import LayerListView
@@ -10,7 +10,7 @@ from linum.helper import days_in_month, split_by_months
 
 class Calendar:
 
-    def __init__(self, layer_list: LayerList, context: Context):
+    def __init__(self, layer_list: LayerList, context: CharPainterContext):
         """
         Календарь с задачами.
 
@@ -57,7 +57,7 @@ class Calendar:
         :return:
         """
         rendered_rows = []
-        months = split_by_months(self.context.start_date, self.context.length)
+        months = split_by_months(self.context.start, self.context.length)
         for i in range(0, len(months), self.context.months_in_row):
             m = months[i:i + self.context.months_in_row]
             d, _ = m[0]
@@ -78,13 +78,13 @@ class Calendar:
         # Если период отображения начинается не с первого числа,
         # то добавляем заданную начальную дату
         months_first_dates = []
-        if self.context.start_date.day != 1:
-            months_first_dates.append(self.context.start_date)
+        if self.context.start.day != 1:
+            months_first_dates.append(self.context.start)
 
         # Запоминаем каждое первое число каждого месяца
         for i in range(self.context.length):
-            if (self.context.start_date + timedelta(i)).day == 1:
-                months_first_dates.append(self.context.start_date + timedelta(i))
+            if (self.context.start + timedelta(i)).day == 1:
+                months_first_dates.append(self.context.start + timedelta(i))
 
         result = []
         for i in range(0, len(months_first_dates), self.context.months_in_row):

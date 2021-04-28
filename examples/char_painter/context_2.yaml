@@ -1,0 +1,7 @@
+char_painter:
+  start: 2020-01-01
+  finish: 2020-04-30
+  cell_width: 3
+  inner_borders: False
+  month_inner_borders: True
+

@@ -13,19 +13,19 @@ class TestTaskPart(TestCase):
     def test_start_date(self):
         # Часть, соответствующая задаче
         tp = TaskPart(self.task)
-        self.assertEqual(date(2020, 1, 3), tp.start_date)
+        self.assertEqual(date(2020, 1, 3), tp.start)
 
         # Часть, начинающаяся до задачи
         tp = TaskPart(self.task, start_date=date(2020, 1, 1))
-        self.assertEqual(date(2020, 1, 3), tp.start_date)
+        self.assertEqual(date(2020, 1, 3), tp.start)
 
         # Часть, с продолжительностью, большей чем продолжительность задачи
         tp = TaskPart(self.task, length=4)
-        self.assertEqual(date(2020, 1, 3), tp.start_date)
+        self.assertEqual(date(2020, 1, 3), tp.start)
 
         # Часть, с начальной датой, большей начальной даты задачи
         tp = TaskPart(self.task, length=4)
-        self.assertEqual(date(2020, 1, 3), tp.start_date)
+        self.assertEqual(date(2020, 1, 3), tp.start)
 
     def test_day_after(self):
         # Часть, соответствующая задаче
@@ -50,7 +50,7 @@ class TestTaskPart(TestCase):
 
         # Часть, с начальной датой, большей начальной даты задачи
         tp = TaskPart(self.task, length=4)
-        self.assertEqual(date(2020, 1, 3), tp.start_date)
+        self.assertEqual(date(2020, 1, 3), tp.start)
 
     def test_split(self):
         # Разделение пустой ячейки
