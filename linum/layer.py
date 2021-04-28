@@ -46,7 +46,7 @@ class Layer:
 
     @property
     def parts(self) -> List[TaskPart]:
-        return sorted(self._parts, key=lambda p: p.start_date)
+        return sorted(self._parts, key=lambda p: p.start)
 
     def check(self):
         """

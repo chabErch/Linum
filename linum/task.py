@@ -3,14 +3,16 @@ from datetime import date, timedelta
 
 class Task:
 
-    def __init__(self, name: str = '', start_date: date = date.today(), length: int = 1):
+    def __init__(self, name: str = '', start_date: date = date.today(), length: int = 1, color: int = 0x333333):
         """
         Класс задачи.
 
         :param name: название задачи
         :param start_date: начальная дата
         :param length: продолжительность
+        :param color: цвет задачи
         """
+        self.color = color
         self.name = name
         self.start_date = start_date
         self.length = length
@@ -31,6 +33,9 @@ class Task:
 
     def __bool__(self):
         return bool(self.length)
+
+    def __copy__(self):
+        return Task(self.name, self.start_date, self.length, self.color)
 
     @property
     def day_after(self) -> date:

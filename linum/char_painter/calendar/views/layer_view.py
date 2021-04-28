@@ -45,7 +45,7 @@ class LayerView:
 
         for part in layer.parts:
             # Создаем ячейки между текущей и предыдущей задачами
-            count = (part.start_date - previous_date).days
+            count = (part.start - previous_date).days
             sr = SpaceRow(previous_date, count)
             sr.cell_width = self.cell_width
             sr.month_inner_borders = self.month_inner_borders
@@ -95,7 +95,7 @@ class LayerView:
 
         for part in layer.parts:
             # Создаем ячейки между текущей и предыдущей задачами
-            count = (part.start_date - previous_date).days
+            count = (part.start - previous_date).days
             sr = SpaceRow(previous_date, count)
             sr.cell_width = self.cell_width
             sr.month_inner_borders = self.month_inner_borders
@@ -147,7 +147,7 @@ class LayerView:
 
         for part in layer.parts:
             # Создаем ячейки между текущей и предыдущей задачами
-            count = (part.start_date - previous_date).days
+            count = (part.start - previous_date).days
             pre_cells = self._get_empty_grid_cells(count)
             grid_row.append(pre_cells)
 
