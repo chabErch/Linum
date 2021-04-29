@@ -101,14 +101,20 @@ class LayerView:
             sr.cell_width = self.cell_width
             sr.month_inner_borders = self.month_inner_borders
             sr.inner_borders = self.inner_borders
-            row.append(sr.pre_render())
+            cell = sr.pre_render()
+            if not self.inner_borders and self.month_inner_borders and previous_date.day == 1:
+                content = cell.render()
+                cell = Cell(len(content), content)
+                cell.left_border = True
+            row.append(cell)
 
         row.left_border = self.left_border
         row.left_border_char = self.left_border_char
-        row.cells[0].left_border = self.left_border
         row.right_border = self.right_border
         row.right_border_char = self.right_border_char
-        row.cells[-1].right_border = self.right_border
+        if len(row.cells) > 0:
+            row.cells[0].left_border = self.left_border
+            row.cells[-1].right_border = self.right_border
 
         return row.merge()
 
