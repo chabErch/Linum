@@ -19,6 +19,7 @@ class GridRow(DateRow):
         super().__init__(start_date, length)
         self.top_outline = top_outline
         self.inner_border_char = Border(t=top_outline, b=not top_outline)
+        self.month_inner_border_char = Border(t=top_outline, b=not top_outline)
         self.left_border_char = Border(r=True, b=top_outline, t=not top_outline)
         self.right_border_char = Border(l=True, b=top_outline, t=not top_outline)
 

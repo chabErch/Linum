@@ -6,7 +6,7 @@ from linum.char_painter.calendar.grid import GridRow
 from linum.char_painter.enums import Align
 
 
-class TaskPartView(DateRow):
+class TaskPartOutlineView(DateRow):
 
     def __init__(self, task_part: TaskPart):
         """
@@ -17,33 +17,17 @@ class TaskPartView(DateRow):
         self.task_part = task_part
         super().__init__(task_part.start, task_part.length)
 
-    def pre_render_middle_segment(self) -> Cell:
-        """
-        Возвращает средний сегмент в виде ячейки.
-
-        :return: Cell
-        """
-        cell = self.merge(self.task_part.task.name)
-        cell.right_border = True
-        cell.left_border = True
-        cell.align = Align.LEFT
-        if not self.inner_borders:
-            cell.cell_width -= 2
-            content = cell.render()
-            cell = Cell(len(content), content)
-
-        return cell
-
-    def pre_render_outline(self, is_top_outline=True) -> Cell:
+    def pre_render(self, is_top_outline=True) -> Cell:
         """
         Возвращает строковое представление верхнего или нижнего сегмента кусочка задачи.
 
         :param is_top_outline: верхняя или нижняя часть
-        :return: GridCell
+        :return: Cell
         """
         gr = GridRow(self.start_date, self.length, is_top_outline)
         gr.cell_width = self.cell_width
         gr.inner_borders = self.inner_borders
+        gr.month_inner_borders = self.month_inner_borders
         gr.left_border = True
         gr.right_border = True
         cell = gr.merge()
@@ -51,7 +35,7 @@ class TaskPartView(DateRow):
             cell.left_border_char += Border(t=is_top_outline, b=not is_top_outline)
             cell.right_border_char += Border(t=is_top_outline, b=not is_top_outline)
         if not self.inner_borders:
-            cell.content = cell.content[:-2]
+            cell.content = cell.content[1:-1]
             cell.cell_width -= 2
             content = cell.render()
             cell = Cell(len(content), content)

@@ -47,7 +47,7 @@ class DateRow(Row):
         cells = [self.date_cell_class(self.cell_width, d) for d in dates]
 
         # Устанавливаем границы между месяцами
-        if self.month_inner_borders:
+        if not self.inner_borders and self.month_inner_borders:
             cells = self.set_month_borders(cells, self.month_inner_border_char)
 
         return cells
@@ -63,11 +63,20 @@ class DateRow(Row):
         pass
 
     @staticmethod
-    def set_month_borders(cells: List[DateCell], border=Border(t=True, b=True)):
-        # Устанавливаем границы между месяцами
+    def set_month_borders(cells: List[DateCell], border=Border(t=True, b=True)) -> List[DateCell]:
+        """
+        Устанавливает границы между месяцами.
+
+        :param cells: ячейки для установки границ
+        :param border: граница, которую необходимо установить
+        :return: List[DateCell]
+        """
         for i in range(1, len(cells)):
             if cells[i].date.day == 1:
                 cells[i].left_border = True
                 cells[i].left_border_char += border
+
+                cells[i-1].right_border = True
+                cells[i-1].right_border_char += border
 
         return cells

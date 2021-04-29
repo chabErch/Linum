@@ -1,3 +1,4 @@
 char_painter:
   length: 7
-  cell_width: 3
+  cell_width: 20
+  inner_borders: False

@@ -21,8 +21,19 @@ class GridCell(DateCell):
 
     @property
     def content(self) -> str:
+        """
+        Возвращает символьное представление ячейки.
+
+        :return: str
+        """
         return self.cell_width * str(self.fill_char)
 
     @content.setter
-    def content(self, value: Any):
+    def content(self, any_: Any):
+        """
+        Заглушка. Не вносит никаких изменений.
+        Необходима для корректного вызова конструктора родительского класса.
+
+        :param any_:
+        """
         pass
