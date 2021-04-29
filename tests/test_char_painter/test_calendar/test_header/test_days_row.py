@@ -22,8 +22,11 @@ class TestDaysRow(TestCase):
         dr.cell_width = cell_width
         dr.month_inner_borders = True
         d1 = DayCell(cell_width, date(2020, 1, 31))
+        d1.right_border = True
         d2 = DayCell(cell_width, date(2020, 2, 1))
         d2.left_border = True
+        d2.left_border = True
+        cells = dr.cells
         self.assertEqual([d1, d2], dr.cells)
 
         # На границе месяца без границ между месяцами

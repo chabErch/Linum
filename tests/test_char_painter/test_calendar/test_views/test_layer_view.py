@@ -73,14 +73,14 @@ class TestLayerView(TestCase):
         layer = Layer([self.tp_before])
         lw = LayerView(layer, date(2020, 1, 29), 3)
         lw.inner_borders = True
-        self.assertEqual('    │Task 1   │', lw.render_middle_segment())
+        self.assertEqual('    │Task 1   ', lw.render_middle_segment())
 
         # Слой с задачей до конца месяца с внутренними границами и левой границей
         layer = Layer([self.tp_before])
         lw = LayerView(layer, date(2020, 1, 29), 3)
         lw.inner_borders = True
         lw.left_border = True
-        self.assertEqual('│    │Task 1   │', lw.render_middle_segment())
+        self.assertEqual('│    │Task 1   ', lw.render_middle_segment())
 
         # Слой с задачей до конца месяца с внутренними границами и правой границей
         layer = Layer([self.tp_before])
