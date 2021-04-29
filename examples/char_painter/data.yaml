@@ -1,13 +1,16 @@
 Current day task:
-    length: 5
+    length: 1
+
+Another day task:
+    length: 2
 
 Vacation:
-    date: 2020-01-02
+    date: 2020-01-01
     length: 20
 
 Task 1:
     date: 2020-01-20
-    finish: 2020-02-02
+    finish: 2020-02-01
 
 Task 2:
     date: 2020-02-03
@@ -20,7 +23,7 @@ Task 3.:
         1:
             date: 2020-02-23
         2:
-            date: 2020-03-17
+            date: 2020-03-28
 
 Duty:
     length: 2
