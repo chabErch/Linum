@@ -36,7 +36,7 @@ class Cell:
     def __bool__(self):
         if self.cell_width <= 0:
             return False
-        return bool(self.content)
+        return True
 
     def __eq__(self, other):
         if not isinstance(other, Cell):

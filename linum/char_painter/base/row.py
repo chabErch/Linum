@@ -44,7 +44,7 @@ class Row:
         raise TypeError("unsupported operand type for +: 'Row' and '{}'".format(type(other)))
 
     def __bool__(self):
-        if not self.cells:
+        if not self.cells and not self.left_border and not self.right_border:
             return False
         for cell in self.cells:
             if cell:

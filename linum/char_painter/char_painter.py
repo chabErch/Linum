@@ -1,14 +1,14 @@
 from typing import List
 
+from linum import CharPainterContext
 from linum import Composer
-from linum import Context
 from linum import Task
 from linum.char_painter.calendar import Calendar
 
 
 class CharPainter:
 
-    def __init__(self, tasks: List[Task] = None, context: Context = Context()):
+    def __init__(self, tasks: List[Task] = None, context: CharPainterContext = CharPainterContext()):
         self.context = context
         self.tasks = tasks or []
 
