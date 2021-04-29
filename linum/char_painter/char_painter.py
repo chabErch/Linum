@@ -9,6 +9,12 @@ from linum.char_painter.calendar import Calendar
 class CharPainter:
 
     def __init__(self, tasks: List[Task] = None, context: CharPainterContext = CharPainterContext()):
+        """
+        Объект для рисования календаря символами.
+
+        :param tasks:
+        :param context:
+        """
         self.context = context
         self.tasks = tasks or []
 

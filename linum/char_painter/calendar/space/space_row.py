@@ -8,6 +8,12 @@ from .space_cell import SpaceCell
 class SpaceRow(DateRow):
 
     def __init__(self, start_date: date, length: int):
+        """
+        Пробельная строка. Отделяет кусочки задач на слое.
+
+        :param start_date:
+        :param length:
+        """
         super().__init__(start_date, length)
 
     @property

@@ -57,26 +57,3 @@ class MonthsRow(DateRow):
         :param any_:
         """
         pass
-
-    # def render(self) -> str:
-    #     """
-    #     Рендер строки с названиями месяцев
-    #
-    #     :return:
-    #     """
-    #     cells = self.cells
-    #     row = Row(cells)
-    #
-    #     # Выставляем левую границу
-    #     row.left_border = self.left_border
-    #     row.left_border_char = self.left_border_char
-    #
-    #     # Выставляем правую границу
-    #     row.right_border = self.right_border
-    #     row.right_border_char = self.right_border_char
-    #
-    #     # Выставляем внутренние границы
-    #     row.inner_borders = self.month_inner_border or self.inner_borders
-    #     row.inner_border_char = self.month_inner_border_char
-    #
-    #     return row.render()

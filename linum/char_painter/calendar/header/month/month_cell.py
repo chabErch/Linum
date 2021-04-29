@@ -38,12 +38,3 @@ class MonthCell(DateCell):
         :param any_: Any
         """
         pass
-
-    # def pre_render(self) -> str:
-    #     """
-    #     Пререндер ячейки с названием месяца.
-    #     Возвращает строковое представление ячейки без внешних границ.
-    #
-    #     :return:
-    #     """
-    #     return self.content.strftime('%B') + ' `' + self.content.strftime('%y')

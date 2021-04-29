@@ -7,6 +7,12 @@ from linum.char_painter.base import DateCell
 class SpaceCell(DateCell):
 
     def __init__(self, cell_width: int = 0, date_: Optional[date] = None):
+        """
+        Пробельная ячейка. Разделяет кусочки задач на слое.
+
+        :param cell_width: ширина ячейки в символах
+        :param date_: дата ячейки
+        """
         super().__init__(cell_width, date_)
 
     @property
