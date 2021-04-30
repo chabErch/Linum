@@ -36,5 +36,5 @@ class Context:
 class CharPainterContext(Context):
 
     def __init__(self, **kwargs):
-        self.cell_width = 3
+        self.cell_width = 20
         super().__init__(**kwargs)
