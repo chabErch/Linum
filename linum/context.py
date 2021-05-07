@@ -1,5 +1,7 @@
 from datetime import date, timedelta
 
+from linum.excel_renderer.base.style import Style
+
 
 class Context:
 
@@ -38,3 +40,17 @@ class CharPainterContext(Context):
     def __init__(self, **kwargs):
         self.cell_width = 20
         super().__init__(**kwargs)
+
+
+class ExcelRendererContext(Context):
+
+    def __init__(self, **kwargs):
+        self.styles = Style()
+
+        self.days_off = []
+        self.workdays = []
+
+        super().__init__(**kwargs)
+
+    def dict(self) -> dict:
+        return vars(self)
