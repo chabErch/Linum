@@ -1,14 +1,15 @@
+import colorsys
 from datetime import timedelta, date
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 from linum.char_painter.enums import Align
 
 
 def days_in_month(date_: date.today()) -> int:
     """
-    Возвращает количество дней в месяце для указанной даты.
+    Returns days count in specified month
 
-    :param date_: дата, месяц которой необходимо вычислить
+    :param date_: date of month
     :return: int
     """
     year = date_.year
@@ -63,7 +64,7 @@ def split_by_months(start_date: date, length: int) -> List[Tuple[date, int]]:
 
 def supp_content(content: str, length: int, align: Align = Align.LEFT, fill_char: str = ' ') -> str:
     """
-    Дополнгяет строку до указанной длины символами `fill_char`.
+    Дополняет строку до указанной длины символами `fill_char`.
 
     :param content: содержимое для выравнивания
     :param length: требуемая длина
@@ -95,10 +96,10 @@ def supp_content(content: str, length: int, align: Align = Align.LEFT, fill_char
 
 def trim_content(content: str, length: int) -> str:
     """
-    Оборезает содержимое до указанной длины.
+    Trims content to specified length.
 
-    :param content: содержимое для обрезания
-    :param length: требуемая длина
+    :param content: content to trim
+    :param length: specified length
     :return: str
     """
     if length <= 0:
@@ -106,3 +107,67 @@ def trim_content(content: str, length: int) -> str:
     if len(content) > length:
         return content[:length - 1] + "…"
     return content
+
+
+def rgb_to_hsv(rgb: int) -> Tuple[float, float, float]:
+    """
+    Converts rgb int value to hue, saturation and value parts in percents.
+
+    :param rgb: int value
+    :return: Tuple[float, float, float]
+    """
+    r = (rgb & 0xFF0000) >> 16
+    g = (rgb & 0x00FF00) >> 8
+    b = rgb & 0x0000FF
+
+    r, g, b = r / 255, g / 255, b / 255
+
+    return colorsys.rgb_to_hsv(r, g, b)
+
+
+def hsv_to_rgb(h: float, s: float, v: float) -> int:
+    """
+    Converts hue, saturation and value parts in percents to rgb int value.
+
+    :param h: hue part in percents
+    :param s: saturation part in percents
+    :param v: value part in percents
+    :return: int
+    """
+    r, g, b = colorsys.hsv_to_rgb(h, s, v)
+
+    r, g, b, = int(r * 255), int(g * 255), int(b * 255)
+
+    r = r << 16
+    g = g << 8
+
+    return r + g + b
+
+
+def add_blackout(rgb, blackout: float) -> int:
+    """
+    Adds blackout to specified rgb color
+
+    :param rgb: rgb color as int
+    :param blackout: blackout value as percents
+    :return: rgb as int
+    """
+    h, s, v = rgb_to_hsv(rgb)
+    v = max(0.0, v - blackout)
+    rgb = hsv_to_rgb(h, s, v)
+    return rgb
+
+
+def color_to_str(rgb: int) -> str:
+    if isinstance(rgb, str):
+        return rgb
+    return '#' + hex(rgb)[2:].zfill(6)
+
+
+def is_day_off(date_: date, days_off: Optional[List[date]] = None, workdays: Optional[List[date]] = None) -> bool:
+    days_off = days_off or []
+    workdays = workdays or []
+    day_off = date_.weekday() == 5 or date_.weekday() == 6
+    day_off = day_off or date_ in days_off
+    day_off = day_off and date_ not in workdays
+    return day_off
