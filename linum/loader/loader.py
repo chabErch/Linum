@@ -5,7 +5,8 @@ from typing import List, Optional
 import yamale
 
 from linum import Task
-from linum.context import CharPainterContext
+from linum.context import CharPainterContext, ExcelRendererContext
+from linum.excel_renderer.base.style import Style
 
 DATA_SCHEMA_PATH = os.path.dirname(__file__) + "/data_schema.yaml"
 CONTEXT_SCHEMA_PATH = os.path.dirname(__file__) + "/context_schema.yaml"
@@ -96,3 +97,38 @@ class Loader:
                 task_ = copy(task)
                 tasks += self._recursive_task_load(task_, v)
             return tasks
+
+    @staticmethod
+    def load_excel_renderer_context(yaml_path: Optional[str] = None) -> ExcelRendererContext:
+        # Upload schema
+        schema = yamale.make_schema(CONTEXT_SCHEMA_PATH)
+        # Upload all data
+        data = yamale.make_data(yaml_path)
+        # Validating
+        yamale.validate(schema, data)
+        data = data[0][0]
+
+        days_off_list = data.pop("days_off", [])
+        workdays_list = data.pop("workdays", [])
+
+        # ====================================================================
+
+        def _recursive(d: dict) -> Style:
+            style = Style(**d)
+            for k, v in style.items():
+                if isinstance(v, dict):
+                    s = _recursive(v)
+                    s.parents = [style]
+                    style.update({k: s})
+            return style
+
+        excel_renderer = data.pop("excel_renderer", {})
+        styles = _recursive(excel_renderer.pop("styles", {}))
+
+        # ====================================================================
+
+        kwargs = {}
+        kwargs.update(data.get("period", {}))
+        kwargs.update(excel_renderer)
+        kwargs.update({"styles": styles, "days_off": days_off_list, "workdays": workdays_list})
+        return ExcelRendererContext(**kwargs)
