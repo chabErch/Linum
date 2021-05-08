@@ -7,7 +7,7 @@ class Context:
 
     def __init__(self, **kwargs):
         self.start = date.today()
-        self.finish = date.today() + timedelta(7)
+        self.finish = date.today() + timedelta(30)
         self.inner_borders = True
         self.month_inner_borders = True
         self.left_border = True
