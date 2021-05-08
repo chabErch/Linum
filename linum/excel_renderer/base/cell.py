@@ -33,6 +33,12 @@ class Cell:
         Sets cell size and prepares style settings.
 
         """
+        # Setting cell height
+        cell_height_px = self.style.get("cell_height_px", None)
+        if isinstance(cell_height_px, int):
+            cell_height_px = max(0, cell_height_px)
+            worksheet.set_row_pixels(row, cell_height_px)
+
         # Setting cell width
         cell_width_px = self.style.get('cell_width_px', None)
         if isinstance(cell_width_px, int):
