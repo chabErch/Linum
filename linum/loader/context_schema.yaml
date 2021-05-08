@@ -29,18 +29,18 @@ char_painter:
 xlsxwriter_styles: &Xlsxwriter_styles
   font_name: str(required=False)
   font_size: int(required=False)
-  font_color: int(required=False)
+  font_color: any(int(), Regex('^auto$'), required=False)
   bold: bool(required=False)
   italic: bool(required=False)
   underline: bool(required=False)
   num_format: str(required=False)
   align: enum('left', 'center', 'right', required=False)
   valign: enum('top', 'vcenter', 'bottom', required=False)
-  bg_color: int(required=False)
-  left: int(min=0, max=13, required=False)
-  right: int(min=0, max=13, required=False)
-  top: int(min=0, max=13, required=False)
-  bottom: int(min=0, max=13, required=False)
+  bg_color: any(int(), null(), required=False)
+  left: any(int(min=0, max=13), null(), required=False)
+  right: any(int(min=0, max=13), null(), required=False)
+  top: any(int(min=0, max=13), null(), required=False)
+  bottom: any(int(min=0, max=13), null(), required=False)
   left_color: int(required=False)
   right_color: int(required=False)
   top_color: int(required=False)
@@ -51,6 +51,7 @@ excel_linum_styles: &Excel_linum_styles
   use_blackout: bool(required=False)
   blackout_value: num(min=0.0, max=1.0, required=False)
   cell_width_px: int(min=0, required=False)
+  cell_height_px: int(min=0, required=False)
 
 excel_header:
   <<: *Excel_linum_styles
@@ -61,7 +62,7 @@ excel_header:
 excel_layers:
   <<: *Excel_linum_styles
   space_row: include('excel_linum_styles', required=False)
-  empty_space: include('excel_linum_styles', required=False)
+  space: include('excel_linum_styles', required=False)
   tasks: include('excel_linum_styles', required=False)
 
 excel_days_off:
