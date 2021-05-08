@@ -9,6 +9,7 @@ from linum.excel_renderer.base.date_row import DateRow
 from linum.excel_renderer.base.style import Style
 from linum.helper import split_by_months
 from .month_cell import MonthCell
+from ...space.space_row import SpaceRow
 
 
 class MonthsRow(DateRow):
@@ -27,6 +28,10 @@ class MonthsRow(DateRow):
         months = split_by_months(self.date, self.length)
         offset = 0
         for d, length in months:
+            # Rendering background
+            bg_row = SpaceRow(d, length, workday_style=self.workday_style, day_off_style=self.workday_style)
+            bg_row.render(row, column, worksheet, workbook)
+
             worksheet.merge_range(row, column + offset, row, column + offset + length - 1, '')
             cell = MonthCell(d, self.workday_style)
             cell.render(row, column + offset, worksheet, workbook)
