@@ -3,21 +3,31 @@ from typing import List
 from xlsxwriter import Workbook
 from xlsxwriter.format import Format
 
+from linum.color import Color
 from linum.helper import color_to_str, add_blackout
 
 WHITE_COLOR = 0xFFFFFF
+BLACK_COLOR = 0x000000
 
 
 class Style(dict):
 
-    def __init__(self, **kwargs):
+    def __init__(self, debug_name="", **kwargs):
         """
         Container for styles settings.
 
         :param kwargs: styles settings
         """
+        self.debug_name = debug_name
         self.parents: List[Style] = []
         super().__init__(**kwargs)
+
+    def __bool__(self):
+        result = bool(super())
+        return result or bool(self.parents)
+
+    def __repr__(self):
+        return "<Style '{}'>".format(self.debug_name)
 
     def get(self, key, default=None):
         """
@@ -48,9 +58,12 @@ class Style(dict):
         :return: Style
         """
         if key in self and isinstance(self[key], Style):
-            return self[key]
+            sub_style = self[key]
+            sub_style.debug_name = key
+            return sub_style
         sub_style = Style()
         sub_style.parents = [self]
+        sub_style.debug_name = key
         return sub_style
 
     @property
@@ -81,9 +94,13 @@ class Style(dict):
         """
         style_params = self.all
 
+        # Resolving font color
+        if style_params.get("font_color", False) == "auto":
+            style_params = self.get_font_color(style_params)
+
         # Applying blackout
-        if self.get("use_blackout", False):
-            blackout_value = self.get("blackout_value", 0.12)
+        if style_params.get("use_blackout", False):
+            blackout_value = style_params.get("blackout_value", 0.12)
             style_params = self.apply_blackout(style_params, blackout_value)
 
         # Fixing colors
@@ -114,8 +131,18 @@ class Style(dict):
         Applies blackout to all colors in style dict
 
         """
-        style_dict.setdefault('bg_color', WHITE_COLOR)
+        bg_color = style_dict.setdefault('bg_color', WHITE_COLOR)
         for k, v in style_dict.items():
-            if k.find("color") > -1:
+            if k in ["bg_color", "left_color", "right_color", "top_color", "bottom_color"]:
+                v = v or bg_color
                 style_dict[k] = add_blackout(v, blackout_value)
         return style_dict
+
+    @staticmethod
+    def get_font_color(style_params: dict):
+        bg_color = Color(style_params.get("bg_color", WHITE_COLOR))
+        black_contrast = bg_color.contrast(Color(BLACK_COLOR))
+        white_contrast = bg_color.contrast(Color(WHITE_COLOR))
+        contrast_color = BLACK_COLOR if black_contrast > white_contrast else WHITE_COLOR
+        style_params.update({"font_color": contrast_color})
+        return style_params
