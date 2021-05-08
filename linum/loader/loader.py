@@ -1,5 +1,6 @@
 import os
 from copy import copy
+from pathlib import Path
 from typing import List, Optional
 
 import yamale
@@ -125,6 +126,9 @@ class Loader:
 
         excel_renderer = data.pop("excel_renderer", {})
         styles = _recursive(excel_renderer.pop("styles", {}))
+        if len(styles) == 0:
+            context = Loader.load_default_xlsx_context()
+            styles = context.styles
 
         # ====================================================================
 
@@ -133,3 +137,9 @@ class Loader:
         kwargs.update(excel_renderer)
         kwargs.update({"styles": styles, "days_off": days_off_list, "workdays": workdays_list})
         return ExcelRendererContext(**kwargs)
+
+    @staticmethod
+    def load_default_xlsx_context() -> ExcelRendererContext:
+        path = Path(__file__).parent.parent / "styles" / "xlsx_default_context.yaml"
+        context = Loader.load_excel_renderer_context(str(path.absolute()))
+        return context
