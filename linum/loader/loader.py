@@ -1,4 +1,5 @@
 import os
+import random
 from copy import copy
 from typing import List, Optional
 
@@ -7,6 +8,7 @@ import yamale
 from linum import Task
 from linum.context import CharPainterContext, ExcelRendererContext
 from linum.excel_renderer.base.style import Style
+from linum.styles import color_palettes
 
 DATA_SCHEMA_PATH = os.path.dirname(__file__) + "/data_schema.yaml"
 CONTEXT_SCHEMA_PATH = os.path.dirname(__file__) + "/context_schema.yaml"
@@ -80,7 +82,7 @@ class Loader:
         task.length = (finish - start_date).days if finish else task.length
 
         color = data.get('color')
-        task.color = color if color else task.color
+        task.color = color if color else self.get_random_color()
 
         if 'sub' not in data:
             return [task]
@@ -132,3 +134,9 @@ class Loader:
         kwargs.update(excel_renderer)
         kwargs.update({"styles": styles, "days_off": days_off_list, "workdays": workdays_list})
         return ExcelRendererContext(**kwargs)
+
+    @staticmethod
+    def get_random_color() -> int:
+        colors = color_palettes.material_design
+        color = random.choice(list(colors.values()))
+        return color
