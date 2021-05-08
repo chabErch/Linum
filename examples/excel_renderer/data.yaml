@@ -1,0 +1,40 @@
+Current day task:
+    length: 1
+
+Another day task:
+    length: 2
+
+Vacation:
+    date: 2020-01-01
+    length: 20
+
+Task 1:
+    date: 2020-01-20
+    finish: 2020-02-01
+
+Task 2:
+    date: 2020-02-03
+    length: 10
+    color: 0x9C27B0
+
+Task 3.:
+    length: 10
+    sub:
+        1:
+            date: 2020-02-23
+        2:
+            date: 2020-03-28
+
+Duty:
+    length: 2
+    color: 0x2196F3
+    sub:
+        -
+            date: 2020-02-01
+        -
+            date: 2020-02-07
+        -
+            date: 2020-02-15
+        -
+            length: 3
+            date: 2020-02-25
