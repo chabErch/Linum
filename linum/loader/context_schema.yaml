@@ -12,6 +12,7 @@ period: &Period
   start: day(required=False)
   finish: day(required=False)
   length: int(required=False)
+  months_in_row: int(required=False)
 
 # Txt renderer ###############################################################
 
@@ -41,10 +42,10 @@ xlsxwriter_styles: &Xlsxwriter_styles
   right: any(int(min=0, max=13), null(), required=False)
   top: any(int(min=0, max=13), null(), required=False)
   bottom: any(int(min=0, max=13), null(), required=False)
-  left_color: int(required=False)
-  right_color: int(required=False)
-  top_color: int(required=False)
-  bottom_color: int(required=False)
+  left_color: any(int(), Regex("^blackout$"), required=False)
+  right_color: any(int(), Regex("^blackout$"), required=False)
+  top_color: any(int(), Regex("^blackout$"), required=False)
+  bottom_color: any(int(), Regex("^blackout$"), required=False)
 
 excel_linum_styles: &Excel_linum_styles
   <<: *Xlsxwriter_styles
