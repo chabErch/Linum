@@ -33,6 +33,7 @@ class Calendar:
 
         # Space row styles
         space_row_style = layers_style.get_sub_style("space_row").get_sub_style("_")
+        space_row_style.update({"bottom": 1, "bottom_color": 0xE0E0E0})
         days_off_space_row_style = days_off_layers_style.get_sub_style("space_row").get_sub_style("_")
         days_off_space_row_style.parents.insert(0, space_row_style)
 
@@ -49,16 +50,16 @@ class Calendar:
                             header_style, days_off_header_style)
             header.render(row + row_offset, column, worksheet, workbook)
 
-            # Rendering space row
-            sr = SpaceRow(d, days, days_off, workdays,
-                          space_row_style, days_off_space_row_style)
-            sr.render(row + row_offset + 3, column, worksheet, workbook)
-
             # Rendering layer list
             llv = LayerListView(self.layer_list, d, days,
                                 layers_style, days_off_layers_style,
                                 days_off, workdays)
-            offset = llv.render(row + row_offset + 4, column, worksheet, workbook)
+            offset = llv.render(row + row_offset + 3, column, worksheet, workbook)
+
+            # Rendering space row
+            sr = SpaceRow(d, days, days_off, workdays,
+                          space_row_style, days_off_space_row_style)
+            sr.render(row + row_offset + 3 + offset, column, worksheet, workbook)
 
             # Calculating offset
             row_offset = row_offset + 3 + offset + 1
