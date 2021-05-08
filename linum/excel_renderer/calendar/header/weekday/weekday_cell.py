@@ -1,9 +1,8 @@
 from datetime import date
-from typing import Optional, List
+from typing import Optional
 
 from linum.excel_renderer.base.date_cell import DateCell
 from linum.excel_renderer.base.style import Style
-from linum.excel_renderer.enums import StyleParams
 
 
 class WeekdayCell(DateCell):
@@ -20,4 +19,3 @@ class WeekdayCell(DateCell):
     @property
     def num_format(self) -> str:
         return 'ddd'
-
