@@ -1,3 +1,4 @@
+from copy import copy
 from typing import List
 
 from xlsxwriter import Workbook
@@ -94,14 +95,17 @@ class Style(dict):
         """
         style_params = self.all
 
-        # Resolving font color
-        if style_params.get("font_color", False) == "auto":
-            style_params = self.get_font_color(style_params)
-
         # Applying blackout
         if style_params.get("use_blackout", False):
             blackout_value = style_params.get("blackout_value", 0.12)
             style_params = self.apply_blackout(style_params, blackout_value)
+
+        # Resolving font color
+        if style_params.get("font_color", False) == "auto":
+            style_params = self.get_font_color(style_params)
+
+        # Resolving colors with "blackout" value
+        style_params = self.resolve_blackout_colors(style_params)
 
         # Fixing colors
         style_params = self.fix_colors(style_params)
@@ -122,7 +126,8 @@ class Style(dict):
         """
         for k, v in style_dict.items():
             if k.find("color") > -1:
-                style_dict.update({k: color_to_str(v)})
+                color = Color(v)
+                style_dict.update({k: str(color)})
         return style_dict
 
     @staticmethod
@@ -133,16 +138,36 @@ class Style(dict):
         """
         bg_color = style_dict.setdefault('bg_color', WHITE_COLOR)
         for k, v in style_dict.items():
-            if k in ["bg_color", "left_color", "right_color", "top_color", "bottom_color"]:
+            if k in ["bg_color", "left_color", "right_color", "top_color", "bottom_color"] \
+                    and v != "blackout":
                 v = v or bg_color
-                style_dict[k] = add_blackout(v, blackout_value)
+                color = Color(v)
+                style_dict[k] = color.apply_blackout(blackout_value).rgb
         return style_dict
 
     @staticmethod
     def get_font_color(style_params: dict):
         bg_color = Color(style_params.get("bg_color", WHITE_COLOR))
-        black_contrast = bg_color.contrast(Color(BLACK_COLOR))
+
+        # Calculating color as black with opacity 0.87 on background color
+        dark_color = copy(bg_color)
+        dark_color.apply_blackout(0.87)
+
+        # Calculating contrasts
+        dark_color_contrast = bg_color.contrast(dark_color)
         white_contrast = bg_color.contrast(Color(WHITE_COLOR))
-        contrast_color = BLACK_COLOR if black_contrast > white_contrast else WHITE_COLOR
-        style_params.update({"font_color": contrast_color})
+
+        # Choosing color with greater contrast
+        contrast_color = dark_color if dark_color_contrast > white_contrast else WHITE_COLOR
+        style_params.update({"font_color": contrast_color.rgb})
+        return style_params
+
+    @staticmethod
+    def resolve_blackout_colors(style_params: dict) -> dict:
+        blackout_value = style_params.get("blackout_value", 0.12)
+        for k, v in style_params.items():
+            if v == "blackout":
+                color = Color(style_params.get("bg_color", WHITE_COLOR))
+                color.apply_blackout(blackout_value)
+                style_params[k] = color.rgb
         return style_params
