@@ -37,13 +37,7 @@ class LayerListView:
         offset = 1 if self.use_space_row else 0
         i = 0
         for i, layer in enumerate(ll):
-            # Rendering layer view
-            lv = LayerView(layer, self.start, self.length,
-                           self.layer_style, self.days_off_layer_style,
-                           self.days_off, self.workdays)
-            lv.render(row + (1 + offset) * i, column, worksheet, workbook)
-
-            # Rendering space row after layer view
+            # Rendering space row before layer view
             if self.use_space_row:
                 space_row_style = self.layer_style.get_sub_style("space_row").get_sub_style("_")
                 days_off_space_row_style = self.days_off_layer_style.get_sub_style("space_row").get_sub_style("_")
@@ -51,7 +45,14 @@ class LayerListView:
                 sr = SpaceRow(self.start, self.length,
                               self.days_off, self.workdays,
                               space_row_style, days_off_space_row_style)
-                sr.render(row + (1 + offset) * i + 1, column, worksheet, workbook)
+                sr.render(row + (1 + offset) * i, column, worksheet, workbook)
+
+            # Rendering layer view
+            lv = LayerView(layer, self.start, self.length,
+                           self.layer_style, self.days_off_layer_style,
+                           self.days_off, self.workdays)
+            lv.render(row + (1 + offset) * i + 1, column, worksheet, workbook)
+
         return (1 + offset) * (i + 1)
 
     def _trim(self, start, length) -> LayerList:
