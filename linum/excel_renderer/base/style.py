@@ -158,7 +158,7 @@ class Style(dict):
         white_contrast = bg_color.contrast(Color(WHITE_COLOR))
 
         # Choosing color with greater contrast
-        contrast_color = dark_color if dark_color_contrast > white_contrast else WHITE_COLOR
+        contrast_color = dark_color if dark_color_contrast > white_contrast else Color(WHITE_COLOR)
         style_params.update({"font_color": contrast_color.rgb})
         return style_params
 
