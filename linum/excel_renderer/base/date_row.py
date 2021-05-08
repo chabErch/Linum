@@ -22,8 +22,8 @@ class DateRow(Row):
         :param workday_style: style to apply for workdays
         :param day_off_style: style to apply for days-off
         """
-        self.day_off_style = day_off_style
-        self.workday_style = workday_style
+        self.day_off_style = day_off_style or Style()
+        self.workday_style = workday_style or Style()
 
         self.date = date_
         self.length = length
