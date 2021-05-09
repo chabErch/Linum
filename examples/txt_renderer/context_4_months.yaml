@@ -1,4 +1,4 @@
-char_painter:
+txt:
   start: 2020-01-01
   finish: 2020-05-01
   cell_width: 3
