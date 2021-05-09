@@ -1,6 +1,6 @@
 from datetime import date
 
-from linum.char_painter.base import DateRow
+from linum.char_painter.base.date_row import DateRow
 from .weekday_cell import WeekdayCell
 
 

@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
 from linum import LayerList
-from linum.char_painter.base import Border
+from linum.char_painter.base.border import Border
 from .layer_view import LayerView
 
 

@@ -3,7 +3,7 @@ from typing import List
 from linum import CharPainterContext
 from linum import Composer
 from linum import Task
-from linum.char_painter.calendar import Calendar
+from linum.char_painter.calendar.calendar import Calendar
 
 
 class CharPainter:

@@ -1,11 +1,11 @@
 from datetime import date, timedelta
 from typing import List, Tuple
 
-from linum import Context, CharPainterContext
+from linum import CharPainterContext
 from linum import LayerList
-from linum.char_painter.calendar.header import Header
-from linum.char_painter.calendar.views import LayerListView
 from linum.helper import days_in_month, split_by_months
+from .header.header import Header
+from .views.layer_list_view import LayerListView
 
 
 class Calendar:

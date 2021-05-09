@@ -1,10 +1,10 @@
 from datetime import date, timedelta
 
 from linum import Layer
-from linum.char_painter.base import Border
-from linum.char_painter.base import Cell
-from linum.char_painter.base import Row
-from linum.char_painter.calendar.space import SpaceRow
+from linum.char_painter.base.border import Border
+from linum.char_painter.base.cell import Cell
+from linum.char_painter.base.row import Row
+from linum.char_painter.calendar.space.space_row import SpaceRow
 from .task_part_middle_segment_view import TaskPartMiddleSegmentView
 from .task_part_outline_view import TaskPartOutlineView
 

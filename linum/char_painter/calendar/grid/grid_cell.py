@@ -1,8 +1,8 @@
 from datetime import date
 from typing import Any
 
-from linum.char_painter.base import Border
-from linum.char_painter.base import DateCell
+from linum.char_painter.base.border import Border
+from linum.char_painter.base.date_cell import DateCell
 
 
 class GridCell(DateCell):

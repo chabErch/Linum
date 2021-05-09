@@ -1,7 +1,6 @@
-from datetime import date, timedelta
+from datetime import date
 
-from linum.char_painter.base import Cell
-from linum.char_painter.base import DateRow
+from linum.char_painter.base.date_row import DateRow
 from .space_cell import SpaceCell
 
 

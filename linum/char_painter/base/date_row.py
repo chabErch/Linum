@@ -76,7 +76,7 @@ class DateRow(Row):
                 cells[i].left_border = True
                 cells[i].left_border_char += border
 
-                cells[i-1].right_border = True
-                cells[i-1].right_border_char += border
+                cells[i - 1].right_border = True
+                cells[i - 1].right_border_char += border
 
         return cells

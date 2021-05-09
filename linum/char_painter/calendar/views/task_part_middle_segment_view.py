@@ -1,6 +1,6 @@
 from linum import TaskPart
-from linum.char_painter.base import Cell
-from linum.char_painter.base import DateRow
+from linum.char_painter.base.cell import Cell
+from linum.char_painter.base.date_row import DateRow
 from linum.char_painter.enums import Align
 
 

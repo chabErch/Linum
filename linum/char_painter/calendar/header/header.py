@@ -1,9 +1,9 @@
 from datetime import date
 
-from linum.char_painter.base import Border
-from linum.char_painter.calendar.header.day import DaysRow
-from linum.char_painter.calendar.header.month import MonthsRow
-from linum.char_painter.calendar.header.weekday import WeekdaysRow
+from linum.char_painter.base.border import Border
+from .day.days_row import DaysRow
+from .month.months_row import MonthsRow
+from .weekday.weekdays_row import WeekdaysRow
 
 
 class Header:
