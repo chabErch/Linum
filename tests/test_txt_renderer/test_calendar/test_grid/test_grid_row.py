@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from linum.txt_renderer.base.border import Border
 from linum.txt_renderer.base.cell import Cell
-from linum.txt_renderer.calendar.grid import GridRow
+from linum.txt_renderer.calendar.grid.grid_row import GridRow
 
 
 class TestGridRow(TestCase):

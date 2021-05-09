@@ -1,7 +1,7 @@
 from datetime import date
 from unittest import TestCase
 
-from linum.txt_renderer.calendar.header.weekday import WeekdayCell
+from linum.txt_renderer.calendar.header.weekday.weekday_cell import WeekdayCell
 
 
 class TestWeekday(TestCase):
