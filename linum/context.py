@@ -1,12 +1,13 @@
 from datetime import date, timedelta
 
+from linum.excel_renderer.base.style import Style
+
 
 class Context:
 
     def __init__(self, **kwargs):
-        self.cell_width = 3
-        self.start_date = date.today()
-        self.finish_date = date.today() + timedelta(7)
+        self.start = date.today()
+        self.finish = date.today() + timedelta(30)
         self.inner_borders = True
         self.month_inner_borders = True
         self.left_border = True
@@ -18,11 +19,11 @@ class Context:
 
     @property
     def length(self):
-        return (self.finish_date - self.start_date).days
+        return (self.finish - self.start).days
 
     @length.setter
     def length(self, length: int):
-        self.finish_date = self.start_date + timedelta(max(length, 0))
+        self.finish = self.start + timedelta(max(length, 0))
 
     @property
     def year(self) -> None:
@@ -30,5 +31,26 @@ class Context:
 
     @year.setter
     def year(self, year: int):
-        self.start_date = date(year, 1, 1)
-        self.finish_date = date(year + 1, 1, 1)
+        self.start = date(year, 1, 1)
+        self.finish = date(year + 1, 1, 1)
+
+
+class TxtRendererContext(Context):
+
+    def __init__(self, **kwargs):
+        self.cell_width = 20
+        super().__init__(**kwargs)
+
+
+class ExcelRendererContext(Context):
+
+    def __init__(self, **kwargs):
+        self.styles = Style()
+
+        self.days_off = []
+        self.workdays = []
+
+        super().__init__(**kwargs)
+
+    def dict(self) -> dict:
+        return vars(self)

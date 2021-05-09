@@ -16,15 +16,15 @@ class TaskPart:
         :param length: продолжительность представления
         """
         self.task = task
-        self.start_date = start_date or task.start_date
+        self.start = start_date or task.start_date
         self.length = task.length if length is None else length
         self.is_tail = False
 
     def __repr__(self):
-        return "<TaskPart for '{}' starts at {} with length {}>".format(self.task.name, self.start_date, self.length)
+        return "<TaskPart for '{}' starts at {} with length {}>".format(self.task.name, self.start, self.length)
 
     def __getitem__(self, item):
-        dates = [self.start_date + timedelta(i) for i in range(self.length)]
+        dates = [self.start + timedelta(i) for i in range(self.length)]
         return dates[item]
 
     def __eq__(self, other):
@@ -36,7 +36,7 @@ class TaskPart:
         return True
 
     def __copy__(self):
-        tp = TaskPart(self.task, start_date=self.start_date, length=self.length)
+        tp = TaskPart(self.task, start_date=self.start, length=self.length)
         tp.is_tail = self.is_tail
         return tp
 
@@ -46,11 +46,11 @@ class TaskPart:
         return True
 
     @property
-    def start_date(self) -> date:
+    def start(self) -> date:
         return self._start_date
 
-    @start_date.setter
-    def start_date(self, start_date: date):
+    @start.setter
+    def start(self, start_date: date):
         if start_date < self.task.start_date:
             self._start_date = self.task.start_date
         elif self.task.day_after < start_date:
@@ -64,7 +64,7 @@ class TaskPart:
 
     @length.setter
     def length(self, length: int):
-        a = self.task.day_after - self.start_date
+        a = self.task.day_after - self.start
         a = a.days
         b = max(length, 0)
         length = min(a, b)
@@ -72,7 +72,7 @@ class TaskPart:
 
     @property
     def day_after(self) -> date:
-        return self.start_date + timedelta(max(self.length, 0))
+        return self.start + timedelta(max(self.length, 0))
 
     def split(self, date_: date) -> Tuple[Optional['TaskPart'], Optional['TaskPart']]:
         """
@@ -90,11 +90,11 @@ class TaskPart:
         if date_ >= self.day_after:
             return self, None
 
-        elif date_ <= self.start_date:
+        elif date_ <= self.start:
             return None, self
 
         tp_after = TaskPart(self.task, date_, (self.task.day_after - date_).days)
         tp_after.is_tail = True
         tp_before = copy(self)
-        tp_before.length = (date_ - self.start_date).days
+        tp_before.length = (date_ - self.start).days
         return tp_before, tp_after
