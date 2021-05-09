@@ -1,9 +1,12 @@
 from datetime import date, timedelta
+from typing import Optional
+
+from linum.color import Color
 
 
 class Task:
 
-    def __init__(self, name: str = '', start_date: date = date.today(), length: int = 1, color: int = 0x333333):
+    def __init__(self, name: str = '', start_date: date = date.today(), length: int = 1, color: Optional[int] = None):
         """
         Класс задачи.
 
@@ -12,7 +15,7 @@ class Task:
         :param length: продолжительность
         :param color: цвет задачи
         """
-        self.color = color
+        self.color = color if color is not None else Color.get_random_rgb()
         self.name = name
         self.start_date = start_date
         self.length = length

@@ -29,12 +29,8 @@ Duty:
     length: 2
     color: 0x2196F3
     sub:
-        -
-            date: 2020-02-01
-        -
-            date: 2020-02-07
-        -
-            date: 2020-02-15
-        -
-            length: 3
-            date: 2020-02-25
+        - date: 2020-02-01
+        - date: 2020-02-07
+        - date: 2020-02-15
+        - length: 3
+          date: 2020-02-25

@@ -8,4 +8,49 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.com/chabErch/Linum.svg?branch=master)](https://travis-ci.com/chabErch/Linum)
 
-The tool for tasks visualization — like Gantt chart, but compact.
+The tool for tasks visualization — like Gantt chart, but more compact.
+
+Full documentation are [available here](https://chaberch-linum.readthedocs-hosted.com/). Also there is the [GitHub project page](https://github.com/chabErch/Linum).
+
+[Linum](#Linum)
+
+- [Installation](#Installation)
+- [Usage](#Usage)
+    - [Supported output formats](#Supported output formats)
+    - [Coming soon output formats](#Coming soon output formats)
+- [Contributing](#Contributing)
+- [Author](#Author)
+
+## Installation
+
+Install Linum with `pip`:
+
+```
+>>> pip install linum
+```
+
+## Usage
+
+If you need to visualize your schedule or working plan you are welcome to use Linum. Actually, you are able to use Gantt charts, but they are overloaded with extra information if you have many simple tasks. Gantt charts are better when tasks are sequential and connected between themselves. 
+
+Linum allows you to visualize your information on chosen time interval (week, month, year) like a timetable briefly and convenient.  
+
+### Supported output formats
+
+- Console
+- Text (.txt)
+- Excel (.xlsx)
+
+### Coming soon output formats
+
+- HTML (.html)
+- SVG (.svg)
+- InDesign (.idml)
+
+## Contributing
+
+For now Linum is ready to go for printing your tasks in console on a chosen time interval. Fell free to improve the project and develop any new output formats.
+
+## Author
+
+- [Chaberch](https://github.com/chabErch)
