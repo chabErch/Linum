@@ -5,7 +5,6 @@ from xlsxwriter import Workbook
 from xlsxwriter.format import Format
 
 from linum.color import Color
-from linum.helper import color_to_str, add_blackout
 
 WHITE_COLOR = 0xFFFFFF
 BLACK_COLOR = 0x000000
