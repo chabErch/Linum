@@ -78,7 +78,7 @@ class Calendar:
         # Если период отображения начинается не с первого числа,
         # то добавляем заданную начальную дату
         months_first_dates = []
-        if self.context.start.day != 1:
+        if self.context.start.day_format != 1:
             months_first_dates.append(self.context.start)
 
         # Запоминаем каждое первое число каждого месяца

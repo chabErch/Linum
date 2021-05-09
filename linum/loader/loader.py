@@ -1,11 +1,14 @@
 import os
 from copy import copy
+from pathlib import Path
 from typing import List, Optional
 
 import yamale
 
 from linum import Task
-from linum.context import CharPainterContext
+from linum.color import Color
+from linum.context import CharPainterContext, ExcelRendererContext
+from linum.excel_renderer.base.style import Style
 
 DATA_SCHEMA_PATH = os.path.dirname(__file__) + "/data_schema.yaml"
 CONTEXT_SCHEMA_PATH = os.path.dirname(__file__) + "/context_schema.yaml"
@@ -79,7 +82,7 @@ class Loader:
         task.length = (finish - start_date).days if finish else task.length
 
         color = data.get('color')
-        task.color = color if color else task.color
+        task.color = color if color else Color.get_random_rgb()
 
         if 'sub' not in data:
             return [task]
@@ -96,3 +99,47 @@ class Loader:
                 task_ = copy(task)
                 tasks += self._recursive_task_load(task_, v)
             return tasks
+
+    @staticmethod
+    def load_excel_renderer_context(yaml_path: Optional[str] = None) -> ExcelRendererContext:
+        # Upload schema
+        schema = yamale.make_schema(CONTEXT_SCHEMA_PATH)
+        # Upload all data
+        data = yamale.make_data(yaml_path)
+        # Validating
+        yamale.validate(schema, data)
+        data = data[0][0]
+
+        days_off_list = data.pop("days_off", [])
+        workdays_list = data.pop("workdays", [])
+
+        # ====================================================================
+
+        def _recursive(d: dict) -> Style:
+            style = Style(**d)
+            for k, v in style.items():
+                if isinstance(v, dict):
+                    s = _recursive(v)
+                    s.parents = [style]
+                    style.update({k: s})
+            return style
+
+        excel_renderer = data.pop("excel_renderer", {})
+        styles = _recursive(excel_renderer.pop("styles", {}))
+        if len(styles) == 0:
+            context = Loader.load_default_xlsx_context()
+            styles = context.styles
+
+        # ====================================================================
+
+        kwargs = {}
+        kwargs.update(data.get("period", {}))
+        kwargs.update(excel_renderer)
+        kwargs.update({"styles": styles, "days_off": days_off_list, "workdays": workdays_list})
+        return ExcelRendererContext(**kwargs)
+
+    @staticmethod
+    def load_default_xlsx_context() -> ExcelRendererContext:
+        path = Path(__file__).parent.parent / "styles" / "xlsx_default_context.yaml"
+        context = Loader.load_excel_renderer_context(str(path.absolute()))
+        return context
