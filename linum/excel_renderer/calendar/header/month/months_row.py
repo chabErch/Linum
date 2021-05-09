@@ -30,7 +30,7 @@ class MonthsRow(DateRow):
         for d, length in months:
             # Rendering background
             bg_row = SpaceRow(d, length, workday_style=self.workday_style, day_off_style=self.workday_style)
-            bg_row.render(row, column, worksheet, workbook)
+            bg_row.render(row, column + offset, worksheet, workbook)
 
             worksheet.merge_range(row, column + offset, row, column + offset + length - 1, '')
             cell = MonthCell(d, self.workday_style)
