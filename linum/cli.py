@@ -1,6 +1,6 @@
 import click
 
-from linum import Loader, Context, CharPainterContext
+from linum import Loader, Context, TxtRendererContext
 from linum.txt_renderer import CharPainter
 
 
@@ -20,7 +20,7 @@ def cli(tasks_filename, out, renderer, context):
 
     # txt_renderer out
     if renderer == 'CP':
-        context = Loader().load_char_painter_context(context) if context else CharPainterContext()
+        context = Loader().load_txt_renderer_context(context) if context else TxtRendererContext()
         cp = CharPainter(tasks, context)
         if out:
             file = open(out, mode='wt', encoding='utf-8')

@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 from typing import List, Tuple
 
-from linum import CharPainterContext
+from linum import TxtRendererContext
 from linum import LayerList
 from linum.helper import days_in_month, split_by_months
 from .header.header import Header
@@ -10,7 +10,7 @@ from .views.layer_list_view import LayerListView
 
 class Calendar:
 
-    def __init__(self, layer_list: LayerList, context: CharPainterContext):
+    def __init__(self, layer_list: LayerList, context: TxtRendererContext):
         """
         Календарь с задачами.
 
