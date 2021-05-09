@@ -13,6 +13,7 @@ xlsx:
       right_color: 0xE0E0E0
 
       months:
+        cell_height_px: 30
         valign: bottom
         font_size: 12
         bold: True
