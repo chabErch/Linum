@@ -82,7 +82,7 @@ class Loader:
         task.length = (finish - start_date).days if finish else task.length
 
         color = data.get('color')
-        task.color = color if color else Color.get_random_rgb()
+        task.color = color if color else task.color
 
         if 'sub' not in data:
             return [task]
