@@ -1,12 +1,17 @@
+.. Linum documentation master file, created by
+   sphinx-quickstart on Sun May  9 21:18:51 2021.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+=================================
+Welcome to Linum's documentation!
+=================================
+
 .. toctree::
    :maxdepth: 2
    :hidden:
 
    Creating tasks <creating_tasks.html#://>
-
-=====
-Linum
-=====
 
 .. image:: https://i.postimg.cc/rFWHwqwq/Artboard-1-0-5x.png
    :alt: Linum logo
@@ -88,3 +93,4 @@ Author
 ******
 
 - [Chaberch](https://github.com/chabErch)
+
