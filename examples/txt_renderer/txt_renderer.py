@@ -1,19 +1,13 @@
-from linum import Loader
 from linum.txt_renderer.txt_renderer import TxtRenderer
 
-DATA_PATH = "data.yaml"
-CONTEXT_1_PATH = "context_1.yaml"
-CONTEXT_2_PATH = "context_2.yaml"
+DATA_PATH = "tasks.yaml"
+CONTEXT_WEEK_PATH = "context_week.yaml"
+CONTEXT_4_MONTHS_PATH = "context_4_months.yaml"
 
-# Add some tasks
-tasks = Loader().load_tasks(DATA_PATH)
+# One week render
+tr = TxtRenderer(DATA_PATH, CONTEXT_WEEK_PATH, "out_1.txt")
+tr.render()
 
-# Tasks for week
-context = Loader().load_char_painter_context(CONTEXT_1_PATH)
-tr = TxtRenderer(tasks, context)
-print(tr.render())
-
-# Tasks for 4 months
-context = Loader().load_char_painter_context(CONTEXT_2_PATH)
-tr = TxtRenderer(tasks, context)
-print(tr.render())
+# 4 months render
+tr = TxtRenderer(DATA_PATH, CONTEXT_4_MONTHS_PATH, "out_2.txt")
+tr.render()

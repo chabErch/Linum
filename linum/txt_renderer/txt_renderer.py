@@ -1,6 +1,7 @@
-from typing import List
+from datetime import datetime
+from typing import List, Optional
 
-from linum import CharPainterContext
+from linum import TxtRendererContext, Loader
 from linum import Composer
 from linum import Task
 from linum.txt_renderer.calendar.calendar import Calendar
@@ -8,17 +9,35 @@ from linum.txt_renderer.calendar.calendar import Calendar
 
 class TxtRenderer:
 
-    def __init__(self, tasks: List[Task] = None, context: CharPainterContext = CharPainterContext()):
-        """
-        Объект для рисования календаря символами.
-
-        :param tasks:
-        :param context:
-        """
-        self.context = context
-        self.tasks = tasks or []
+    def __init__(self, tasks_path: str, context_path: Optional[str] = '', out_path: Optional[str] = ''):
+        self.tasks_path = tasks_path
+        self.context_path = context_path
+        self.out_path = out_path
 
     def render(self):
-        ll = Composer(self.tasks).safety_compose()
-        c = Calendar(ll, self.context)
-        return c.render()
+        # Loading tasks
+        tasks = Loader().load_tasks(self.tasks_path)
+
+        # Getting layer list
+        layer_list = Composer(tasks).safety_compose()
+
+        # Loading context
+        if self.context_path:
+            context = Loader.load_txt_renderer_context(self.context_path)
+        else:
+            context = TxtRendererContext()
+
+        # Calculating name of output file
+        path = self.out_path or self.get_default_file_name()
+
+        # Rendering
+        c = Calendar(layer_list, context)
+        file = open(path, mode="wt", encoding="utf-8")
+        file.write(c.render())
+        file.close()
+
+    @staticmethod
+    def get_default_file_name() -> str:
+        d = datetime.now()
+        s = "Linum {}.txt".format(d.strftime("%Y-%m-%d %H.%M"))
+        return s
