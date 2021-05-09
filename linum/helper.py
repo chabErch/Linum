@@ -2,7 +2,7 @@ import colorsys
 from datetime import timedelta, date
 from typing import List, Tuple, Optional
 
-from linum.char_painter.enums import Align
+from linum.txt_renderer.enums import Align
 
 
 def days_in_month(date_: date.today()) -> int:

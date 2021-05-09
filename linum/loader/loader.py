@@ -7,7 +7,7 @@ import yamale
 
 from linum import Task
 from linum.color import Color
-from linum.context import CharPainterContext, ExcelRendererContext
+from linum.context import TxtRendererContext, ExcelRendererContext
 from linum.excel_renderer.base.style import Style
 
 DATA_SCHEMA_PATH = os.path.dirname(__file__) + "/data_schema.yaml"
@@ -41,7 +41,7 @@ class Loader:
         return tasks
 
     @staticmethod
-    def load_char_painter_context(yaml_path: Optional[str] = None) -> CharPainterContext:
+    def load_txt_renderer_context(yaml_path: Optional[str] = None) -> TxtRendererContext:
         """
         Загружает контекст из указанного файла.
 
@@ -49,7 +49,7 @@ class Loader:
         :return: CharPainterContext
         """
         if not yaml_path:
-            return CharPainterContext()
+            return TxtRendererContext()
 
         # Загружаем схему
         schema = yamale.make_schema(CONTEXT_SCHEMA_PATH)
@@ -59,11 +59,11 @@ class Loader:
         yamale.validate(schema, data)
         # Загружаем данные
         base_data = data[0][0].get('base', {})
-        char_painter_data = data[0][0].get('char_painter', {})
+        char_painter_data = data[0][0].get('txt', {})
         base_data.update(char_painter_data)
         # Формируем контекст
-        cpc = CharPainterContext(**base_data)
-        return cpc
+        trc = TxtRendererContext(**base_data)
+        return trc
 
     def _data_to_tasks(self, data: dict) -> List[Task]:
         tasks = []
@@ -124,7 +124,7 @@ class Loader:
                     style.update({k: s})
             return style
 
-        excel_renderer = data.pop("excel_renderer", {})
+        excel_renderer = data.pop("xlsx", {})
         styles = _recursive(excel_renderer.pop("styles", {}))
         if len(styles) == 0:
             context = Loader.load_default_xlsx_context()

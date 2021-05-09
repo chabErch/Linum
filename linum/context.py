@@ -35,7 +35,7 @@ class Context:
         self.finish = date(year + 1, 1, 1)
 
 
-class CharPainterContext(Context):
+class TxtRendererContext(Context):
 
     def __init__(self, **kwargs):
         self.cell_width = 20

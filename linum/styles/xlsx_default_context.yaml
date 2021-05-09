@@ -1,4 +1,4 @@
-excel_renderer:
+xlsx:
   styles:
     cell_width_px: 25
     font_name: Roboto
