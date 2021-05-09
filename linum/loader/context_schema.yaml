@@ -1,7 +1,7 @@
 period: include('period', required=False)
 
-char_painter: include('txt_renderer', required=False)
-excel_renderer: include('excel_renderer', required=False)
+txt: include('txt_renderer', required=False)
+xlsx: include('excel_renderer', required=False)
 
 workdays: list(day(), required=False)
 days_off: list(day(), required=False)
@@ -16,7 +16,7 @@ period: &Period
 
 # Txt renderer ###############################################################
 
-char_painter:
+txt_renderer:
   <<: *Period
   cell_width: int()
   inner_borders: bool(required=False)
