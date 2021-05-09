@@ -1,8 +1,8 @@
 from unittest import TestCase
 
-from linum.char_painter.base.border import Border
-from linum.char_painter.base.cell import Cell
-from linum.char_painter.calendar.grid import GridRow
+from linum.txt_renderer.base.border import Border
+from linum.txt_renderer.base.cell import Cell
+from linum.txt_renderer.calendar.grid import GridRow
 
 
 class TestGridRow(TestCase):

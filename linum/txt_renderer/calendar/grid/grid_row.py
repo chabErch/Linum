@@ -1,9 +1,9 @@
 from datetime import date
 from typing import Any, List
 
-from linum.char_painter.base.border import Border
-from linum.char_painter.base.date_cell import DateCell
-from linum.char_painter.base.date_row import DateRow
+from linum.txt_renderer.base.border import Border
+from linum.txt_renderer.base.date_cell import DateCell
+from linum.txt_renderer.base.date_row import DateRow
 from .grid_cell import GridCell
 
 

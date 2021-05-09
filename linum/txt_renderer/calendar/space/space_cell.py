@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Optional, Any
 
-from linum.char_painter.base.date_cell import DateCell
+from linum.txt_renderer.base.date_cell import DateCell
 
 
 class SpaceCell(DateCell):

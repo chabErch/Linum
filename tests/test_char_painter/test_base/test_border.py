@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from linum.char_painter.base.border import Border
+from linum.txt_renderer.base.border import Border
 
 
 class TestBorder(TestCase):

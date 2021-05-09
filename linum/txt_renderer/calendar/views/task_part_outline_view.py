@@ -1,8 +1,8 @@
 from linum import TaskPart
-from linum.char_painter.base.border import Border
-from linum.char_painter.base.cell import Cell
-from linum.char_painter.base.date_row import DateRow
-from linum.char_painter.calendar.grid.grid_row import GridRow
+from linum.txt_renderer.base.border import Border
+from linum.txt_renderer.base.cell import Cell
+from linum.txt_renderer.base.date_row import DateRow
+from linum.txt_renderer.calendar.grid.grid_row import GridRow
 
 
 class TaskPartOutlineView(DateRow):

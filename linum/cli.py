@@ -1,7 +1,7 @@
 import click
 
 from linum import Loader, Context, CharPainterContext
-from linum.char_painter import CharPainter
+from linum.txt_renderer import CharPainter
 
 
 @click.command()
@@ -18,7 +18,7 @@ def cli(tasks_filename, out, renderer, context):
     # Load tasks
     tasks = Loader().load_tasks(tasks_filename)
 
-    # char_painter out
+    # txt_renderer out
     if renderer == 'CP':
         context = Loader().load_char_painter_context(context) if context else CharPainterContext()
         cp = CharPainter(tasks, context)

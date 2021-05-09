@@ -1,6 +1,6 @@
 from datetime import date
 
-from linum.char_painter.base.border import Border
+from linum.txt_renderer.base.border import Border
 from .day.days_row import DaysRow
 from .month.months_row import MonthsRow
 from .weekday.weekdays_row import WeekdaysRow

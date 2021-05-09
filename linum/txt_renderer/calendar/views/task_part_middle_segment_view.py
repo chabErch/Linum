@@ -1,7 +1,7 @@
 from linum import TaskPart
-from linum.char_painter.base.cell import Cell
-from linum.char_painter.base.date_row import DateRow
-from linum.char_painter.enums import Align
+from linum.txt_renderer.base.cell import Cell
+from linum.txt_renderer.base.date_row import DateRow
+from linum.txt_renderer.enums import Align
 
 
 class TaskPartMiddleSegmentView(DateRow):

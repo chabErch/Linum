@@ -1,7 +1,7 @@
 from datetime import date
 from unittest import TestCase
 
-from linum.char_painter.calendar.header.day.day_cell import DayCell
+from linum.txt_renderer.calendar.header.day.day_cell import DayCell
 
 
 class TestDay(TestCase):

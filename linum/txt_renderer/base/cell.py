@@ -1,6 +1,6 @@
 from typing import Any
 
-from linum.char_painter.enums import Align
+from linum.txt_renderer.enums import Align
 from linum.helper import supp_content, trim_content
 from .border import Border
 

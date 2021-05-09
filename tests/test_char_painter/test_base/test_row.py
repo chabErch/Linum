@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from linum.char_painter.base.cell import Cell
-from linum.char_painter.base.row import Row
+from linum.txt_renderer.base.cell import Cell
+from linum.txt_renderer.base.row import Row
 
 
 class TestRow(TestCase):

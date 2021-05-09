@@ -1,6 +1,6 @@
 period: include('period', required=False)
 
-char_painter: include('char_painter', required=False)
+char_painter: include('txt_renderer', required=False)
 excel_renderer: include('excel_renderer', required=False)
 
 workdays: list(day(), required=False)

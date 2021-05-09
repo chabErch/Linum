@@ -1,7 +1,7 @@
 from datetime import date
 from typing import List, Any
 
-from linum.char_painter.base.date_row import DateRow
+from linum.txt_renderer.base.date_row import DateRow
 from linum.helper import split_by_months
 from .month_cell import MonthCell
 

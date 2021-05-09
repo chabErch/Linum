@@ -1,22 +1,22 @@
 from datetime import date
-from typing import Optional, Any
+from typing import Any
 
-from linum.char_painter.base.date_cell import DateCell
+from linum.txt_renderer.base.date_cell import DateCell
 
 
-class WeekdayCell(DateCell):
+class MonthCell(DateCell):
 
-    def __init__(self, cell_width: int = 0, date_: Optional[date] = None):
+    def __init__(self, cell_width: int = 0, date_: date = date.today()):
         """
-        Ячейка с названием дня недели.
+        Ячейка с названием месяца.
 
         :param cell_width: ширина ячейки в символах;
-        :param date_: дата, которую необходимо отобразить.
+        :param date_: дата, месяц которой необходимо отобразить.
         """
         super().__init__(cell_width, date_)
 
     def __repr__(self):
-        return "<Weekday: {}>".format(self.content)
+        return "<MonthCell at {} with width {}>".format(self.content, self.cell_width)
 
     @property
     def content(self) -> str:
@@ -26,7 +26,7 @@ class WeekdayCell(DateCell):
         :return: str
         """
         if isinstance(self.date, date):
-            return self.date.strftime("%a")
+            return self.date.strftime('%B') + ' `' + self.date.strftime('%y')
         return ''
 
     @content.setter

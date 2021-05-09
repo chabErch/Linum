@@ -1,6 +1,6 @@
 from typing import List, Union, Optional
 
-from linum.char_painter.enums import Align
+from linum.txt_renderer.enums import Align
 from .border import Border
 from .cell import Cell
 

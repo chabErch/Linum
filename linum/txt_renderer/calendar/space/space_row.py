@@ -1,6 +1,6 @@
 from datetime import date
 
-from linum.char_painter.base.date_row import DateRow
+from linum.txt_renderer.base.date_row import DateRow
 from .space_cell import SpaceCell
 
 

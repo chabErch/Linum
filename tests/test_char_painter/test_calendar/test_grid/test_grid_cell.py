@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from linum.char_painter.calendar.grid.grid_cell import GridCell
+from linum.txt_renderer.calendar.grid.grid_cell import GridCell
 
 
 class TestGridCell(TestCase):

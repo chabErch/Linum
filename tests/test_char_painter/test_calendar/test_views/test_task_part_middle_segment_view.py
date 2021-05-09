@@ -2,9 +2,9 @@ from datetime import date
 from unittest import TestCase
 
 from linum import Task
-from linum.char_painter.base.cell import Cell
-from linum.char_painter.calendar.views.task_part_middle_segment_view import TaskPartMiddleSegmentView
-from linum.char_painter.enums import Align
+from linum.txt_renderer.base.cell import Cell
+from linum.txt_renderer.calendar.views.task_part_middle_segment_view import TaskPartMiddleSegmentView
+from linum.txt_renderer.enums import Align
 from linum.task_part import TaskPart
 
 

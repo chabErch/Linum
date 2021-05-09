@@ -59,7 +59,7 @@ class Loader:
         yamale.validate(schema, data)
         # Загружаем данные
         base_data = data[0][0].get('base', {})
-        char_painter_data = data[0][0].get('char_painter', {})
+        char_painter_data = data[0][0].get('txt_renderer', {})
         base_data.update(char_painter_data)
         # Формируем контекст
         cpc = CharPainterContext(**base_data)

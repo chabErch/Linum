@@ -2,7 +2,7 @@ from datetime import date
 from unittest import TestCase
 
 from .fixtures import header
-from linum.char_painter.calendar.header.header import Header
+from linum.txt_renderer.calendar.header.header import Header
 
 
 class TestHeader(TestCase):

@@ -1,7 +1,7 @@
 from datetime import date
 from unittest import TestCase
 
-from linum.char_painter.calendar.header.month.month_cell import MonthCell
+from linum.txt_renderer.calendar.header.month.month_cell import MonthCell
 
 
 class TestMonthCell(TestCase):

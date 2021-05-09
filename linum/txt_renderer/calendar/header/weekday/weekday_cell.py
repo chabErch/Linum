@@ -1,14 +1,14 @@
 from datetime import date
-from typing import Any, Optional
+from typing import Optional, Any
 
-from linum.char_painter.base.date_cell import DateCell
+from linum.txt_renderer.base.date_cell import DateCell
 
 
-class DayCell(DateCell):
+class WeekdayCell(DateCell):
 
     def __init__(self, cell_width: int = 0, date_: Optional[date] = None):
         """
-        Ячейка с порядковым номером дня в месяце.
+        Ячейка с названием дня недели.
 
         :param cell_width: ширина ячейки в символах;
         :param date_: дата, которую необходимо отобразить.
@@ -16,17 +16,17 @@ class DayCell(DateCell):
         super().__init__(cell_width, date_)
 
     def __repr__(self):
-        return "<Day: {}>".format(self.content)
+        return "<Weekday: {}>".format(self.content)
 
     @property
-    def content(self):
+    def content(self) -> str:
         """
-        Возвращает день месяца ячейки.
+        Возвращает строку с названием дня недели.
 
-        :return: date
+        :return: str
         """
         if isinstance(self.date, date):
-            return str(self.date.day)
+            return self.date.strftime("%a")
         return ''
 
     @content.setter
