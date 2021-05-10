@@ -19,6 +19,23 @@ setup(
     description='The tool for tasks visualization — like Gantt chart, but compact.',
     long_description=long_description,
     long_description_content_type="text/markdown",
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Operating System :: OS Independent'
+    ],
+    keywords=[
+        'Gantt', 'chart', 'schedule',
+        'Linum',
+        'render', 'visualisation',
+        'excel', 'xlsx'
+    ],
     entry_points={
         'console_scripts': [
             'linum = linum.cli:cli',
