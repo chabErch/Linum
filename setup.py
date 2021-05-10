@@ -9,7 +9,7 @@ with open(path.join(here, "README.md")) as f:
 
 setup(
     name='Linum',
-    version='0.1',
+    version='0.2',
     packages=find_packages(exclude=["tests", "examples"]),
     package_data={"": ["*.yaml"]},
     url='https://github.com/chabErch/Linum',
