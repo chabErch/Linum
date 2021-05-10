@@ -54,7 +54,6 @@ html_theme_options = {
     'master_doc': True,
     'color_primary': 'indigo',
     'color_accent': 'amber',
-    'logo_icon': '&#xea10'
 }
 
 html_sidebars = {
