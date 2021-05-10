@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from linum import LayerList
+from linum.layer_list import LayerList
 from linum.txt_renderer.base.border import Border
 from .layer_view import LayerView
 

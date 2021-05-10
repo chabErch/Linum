@@ -1,9 +1,9 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
 
-from linum import TxtRendererContext, Loader
-from linum import Composer
-from linum import Task
+from linum.composer import Composer
+from linum.context import TxtRendererContext
+from linum.loader import Loader
 from linum.txt_renderer.calendar.calendar import Calendar
 
 

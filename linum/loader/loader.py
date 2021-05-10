@@ -5,10 +5,9 @@ from typing import List, Optional
 
 import yamale
 
-from linum import Task
-from linum.color import Color
 from linum.context import TxtRendererContext, ExcelRendererContext
 from linum.excel_renderer.base.style import Style
+from linum.task import Task
 
 DATA_SCHEMA_PATH = os.path.dirname(__file__) + "/data_schema.yaml"
 CONTEXT_SCHEMA_PATH = os.path.dirname(__file__) + "/context_schema.yaml"

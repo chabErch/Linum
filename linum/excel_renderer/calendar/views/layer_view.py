@@ -4,10 +4,10 @@ from typing import Optional, List
 from xlsxwriter import Workbook
 from xlsxwriter.worksheet import Worksheet
 
-from linum import Layer
 from linum.excel_renderer.base.style import Style
 from linum.excel_renderer.calendar.space.space_row import SpaceRow
 from linum.excel_renderer.calendar.views.task_part_view import TaskPartView
+from linum.layer import Layer
 
 
 class LayerView:
