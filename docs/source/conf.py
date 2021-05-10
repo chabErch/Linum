@@ -22,7 +22,9 @@ copyright = '2021, chaberch'
 author = 'chaberch'
 
 # The full version, including alpha/beta/rc tags
-release = '0.2'
+import linum
+
+release = linum.__version__
 
 # -- General configuration ---------------------------------------------------
 

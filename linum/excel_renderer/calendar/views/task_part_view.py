@@ -1,10 +1,10 @@
 from datetime import date
 from typing import Optional, List
 
-from linum import TaskPart
 from linum.excel_renderer.base.date_cell import DateCell
 from linum.excel_renderer.base.style import Style
 from linum.excel_renderer.calendar.space.space_row import SpaceRow
+from linum.task_part import TaskPart
 
 
 class TaskPartView(SpaceRow):

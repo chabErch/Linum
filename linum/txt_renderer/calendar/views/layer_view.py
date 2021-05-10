@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from linum import Layer
+from linum.layer import Layer
 from linum.txt_renderer.base.border import Border
 from linum.txt_renderer.base.cell import Cell
 from linum.txt_renderer.base.row import Row

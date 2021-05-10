@@ -1,4 +1,4 @@
-from linum import TaskPart
+from linum.task_part import TaskPart
 from linum.txt_renderer.base.border import Border
 from linum.txt_renderer.base.cell import Cell
 from linum.txt_renderer.base.date_row import DateRow

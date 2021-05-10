@@ -2,6 +2,8 @@ from os import path
 
 from setuptools import setup, find_packages
 
+import linum
+
 here = path.abspath(path.dirname(__file__))
 
 with open(path.join(here, "README.md")) as f:
@@ -9,7 +11,7 @@ with open(path.join(here, "README.md")) as f:
 
 setup(
     name='Linum',
-    version='0.2',
+    version=linum.__version__,
     packages=find_packages(exclude=["tests", "examples"]),
     package_data={"": ["*.yaml"]},
     url='https://github.com/chabErch/Linum',
