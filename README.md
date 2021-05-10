@@ -12,28 +12,12 @@ The tool for tasks visualization — like Gantt chart, but more compact.
 
 Full documentation are [available here](https://chaberch-linum.readthedocs-hosted.com/). Also there is the [GitHub project page](https://github.com/chabErch/Linum).
 
-[Linum](#Linum)
-
-- [Installation](#Installation)
-- [Usage](#Usage)
-    - [Supported output formats](#Supported output formats)
-    - [Coming soon output formats](#Coming soon output formats)
-- [Contributing](#Contributing)
-- [Author](#Author)
-
-## Installation
-
-Install Linum with `pip`:
-
-```
->>> pip install linum
-```
-
-## Usage
+## Description
 
 If you need to visualize your schedule or working plan you are welcome to use Linum. Actually, you are able to use Gantt charts, but they are overloaded with extra information if you have many simple tasks. Gantt charts are better when tasks are sequential and connected between themselves. 
 
-Linum allows you to visualize your information on chosen time interval (week, month, year) like a timetable briefly and convenient.  
+Linum allows you to visualize your information on chosen time interval
+(week, month, year) like a timetable briefly and convenient.
 
 ### Supported output formats
 
@@ -46,6 +30,16 @@ Linum allows you to visualize your information on chosen time interval (week, mo
 - HTML (.html)
 - SVG (.svg)
 - InDesign (.idml)
+
+## Render examples
+
+### TXT renderer
+
+[![image-2021-05-10-00-29-15.png](https://i.postimg.cc/zB3QnTbL/image-2021-05-10-00-29-15.png)](https://postimg.cc/ZBtjmBLZ)
+
+### XLSX renderer
+
+[![image-2021-05-10-00-15-25.png](https://i.postimg.cc/NM7SbdJ0/image-2021-05-10-00-15-25.png)](https://postimg.cc/hzv2t1qF)
 
 ## Contributing
 

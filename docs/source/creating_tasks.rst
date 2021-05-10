@@ -2,9 +2,10 @@
 Creating tasks
 ==============
 
-Tasks creates in text file in `yaml <https://yaml.org/>`_ format.
+Tasks are create in text file in `yaml <https://yaml.org/>`_
+format (``.yaml`` extension).
 It isn`t necessary you to know all yaml syntax.
-All you need is be carefully with indent spaces
+All you need is be careful with indent spaces
 (use double space for one intend) and read this article.
 
 
@@ -21,27 +22,27 @@ Let`s create first task. Here is the simple example:
      start: 2020-01-01
      length: 5
 
-In first line you specify task name. It may be any sting you want.
-After task name must be symbol ':'
+In the first line you specify task name. It may be any sting you want.
+After task name must be symbol ``:``
 
 To specify properties for task you need to write indent and key-value pair.
-Key and value separated by symbol ':' and one space symbol.
+Key and value separated by symbol ``:`` and one space symbol.
 
-In second line after `date` keyword you specify when task starts.
-All dates must be in format `<year>-<month>-<day>`.
-If you don`t specify start date it will be considered as current day.
+In the second line after ``date`` keyword you specify when task starts.
+All dates must be in format ``<year>-<month>-<day>``.
+If you don`t specify start date Linum will be considered it as a current day.
 
-And in third line after `length` keyword  you specify length of task.
+And in the third line after ``length`` keyword you specify length of a task.
 If you don`t specify length it will be considered as one day length.
 
-All lines with keywords are optional, but you must specify at lest one of all of them.
+All lines with keywords are optional, but you must specify at least one of them.
 
 
 Length or finish
 ================
 
-You may use `finish` keyword instead `length` to specify when task is over.
-If both keyword are using then `finish` will be in priority.
+You may use ``finish`` keyword instead ``length`` to specify when task is over.
+If both keyword are using then ``finish`` will be in priority.
 
 .. code-block:: yaml
    :linenos:
@@ -55,7 +56,7 @@ Color
 =====
 
 You may specify color to render for certain task.
-To do it use `color` keyword and hex rgb integer as value.
+To do it use ``color`` keyword and hex rgb integer as value.
 
 .. code-block:: yaml
    :linenos:
@@ -64,20 +65,22 @@ To do it use `color` keyword and hex rgb integer as value.
      start: 2020-02-10
      color: 0xFF0000
 
-If color property does not setted then random color
-from material design palette would be applied.
+If color property does not setted then random color from
+`material design palette <https://material.io/design/color/the-color-system.html#tools-for-picking-colors>`_
+would be applied.
 
 *********
 Sub tasks
 *********
 
-It is also possible to specify sub tasks for certain task
-using `sub` keyword. There are two ways how to do that.
+It is possible to specify sub tasks for certain task
+using ``sub`` keyword. There are two ways how to do that.
 
-If you want to create several tasks with one name
-you need to use list sub tasks.
-And if you want to create tasks with different names
-you need to use dictionary sub tasks.
+- If you want to create several tasks with one name
+  you need to use list sub tasks.
+
+- If you want to create tasks with different names
+  you need to use dictionary sub tasks.
 
 In both cases parent properties will be inherited for a child.
 
