@@ -8,15 +8,16 @@ from linum.txt_renderer.txt_renderer import TxtRenderer
 @click.command()
 @click.argument('tasks_path', type=click.Path(exists=True))
 @click.option('-o', '--out', type=click.Path(writable=True),
-              help='Output file')
+              help='Output file. If not specified then will be new file in current directory.')
 @click.option('-r', '--renderer', default='CONSOLE', type=click.Choice(['CONSOLE', 'TXT', 'XLSX'], ),
               help="Renderer to use. "
                    "'CONSOLE' - for console printing. "
                    "'TXT' - for rendering txt file. "
-                   "'XLSX' - for rendering xlsx file"
+                   "'XLSX' - for rendering xlsx file. "
                    "Default is 'CONSOLE'.")
 @click.option('-c', '--context', type=click.Path(exists=True),
-              help="Context for renderer. It is yaml file with render settings.")
+              help="Context for renderer. It is yaml file with render settings. "
+                   "If not specified then default settings will be applied.")
 def cli(tasks_path, out, renderer, context):
     """ Command line interface for linum. """
 
