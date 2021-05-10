@@ -1,7 +1,7 @@
 from datetime import date
 from unittest import TestCase
 
-from linum import Task
+from linum.task import Task
 from linum.txt_renderer.base.cell import Cell
 from linum.txt_renderer.calendar.views.task_part_middle_segment_view import TaskPartMiddleSegmentView
 from linum.txt_renderer.enums import Align

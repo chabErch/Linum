@@ -3,8 +3,9 @@ from typing import Optional
 
 import xlsxwriter
 
-from linum import Composer, Loader
+from linum.composer import Composer
 from linum.excel_renderer.calendar.calendar import Calendar
+from linum.loader import Loader
 
 
 class ExcelRenderer:

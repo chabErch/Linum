@@ -1,12 +1,12 @@
 from xlsxwriter import Workbook
 from xlsxwriter.worksheet import Worksheet
 
-from linum import LayerList
 from linum.context import ExcelRendererContext
 from linum.excel_renderer.calendar.header.header import Header
 from linum.excel_renderer.calendar.space.space_row import SpaceRow
 from linum.excel_renderer.calendar.views.layer_list_view import LayerListView
 from linum.helper import split_by_months
+from linum.layer_list import LayerList
 
 
 class Calendar:
