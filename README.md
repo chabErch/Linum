@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.com/chabErch/Linum.svg?branch=master)](https://travis-ci.com/chabErch/Linum)
 
-The tool for tasks visualization — like Gantt chart, but more compact.
+The tool for tasks visualization - like Gantt chart, but more compact.
 
 Full documentation are [available here](https://chaberch-linum.readthedocs-hosted.com/). Also there is the [GitHub project page](https://github.com/chabErch/Linum).
 
