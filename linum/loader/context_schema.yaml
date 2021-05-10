@@ -21,7 +21,6 @@ txt_renderer:
   cell_width: int()
   inner_borders: bool(required=False)
   month_inner_borders: bool(required=False)
-  months_in_row: int(required=False)
   left_border: bool(required=False)
   right_border: bool(required=False)
 
