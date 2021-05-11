@@ -2,18 +2,20 @@
 Creating tasks
 ==============
 
-Tasks are create in text file in `yaml <https://yaml.org/>`_
+To produce tasks you need to create text file in `YAML <https://yaml.org/>`_
 format (``.yaml`` extension).
-It isn`t necessary you to know all yaml syntax.
-All you need is be careful with indent spaces
-(use double space for one intend) and read this article.
+It isn`t necessary for you to know all yaml syntax.
+All you need is be careful with number of spaces per indent
+(There is no requirement in YAML to indent any concrete number of spaces,
+but you need to use the same number of spaces in all your YAML file)
+and read this article.
 
 
 *****
 Basic
 *****
 
-Let`s create first task. Here is the simple example:
+Let`s create the first task. Here is the simple example:
 
 .. code-block:: yaml
    :linenos:
@@ -22,18 +24,18 @@ Let`s create first task. Here is the simple example:
      start: 2020-01-01
      length: 5
 
-In the first line you specify task name. It may be any sting you want.
+In the first line you specify task name. It may be any string you want.
 After task name must be symbol ``:``
 
 To specify properties for task you need to write indent and key-value pair.
-Key and value separated by symbol ``:`` and one space symbol.
+Key and value separated by symbol ``:`` and one space symbol after it.
 
-In the second line after ``date`` keyword you specify when task starts.
+In the second line after ``date`` keyword you specify date when task starts.
 All dates must be in format ``<year>-<month>-<day>``.
-If you don`t specify start date Linum will be considered it as a current day.
+If you don`t specify start date Linum will consider it as a current day.
 
 And in the third line after ``length`` keyword you specify length of a task.
-If you don`t specify length it will be considered as one day length.
+If you don`t specify length it will consider as one day length.
 
 All lines with keywords are optional, but you must specify at least one of them.
 
@@ -41,8 +43,8 @@ All lines with keywords are optional, but you must specify at least one of them.
 Length or finish
 ================
 
-You may use ``finish`` keyword instead ``length`` to specify when task is over.
-If both keyword are using then ``finish`` will be in priority.
+You may use ``finish`` keyword instead of ``length`` to specify date when task is over.
+If both of keyword were used then ``finish`` would be in priority.
 
 .. code-block:: yaml
    :linenos:
@@ -65,32 +67,30 @@ To do it use ``color`` keyword and hex rgb integer as value.
      start: 2020-02-10
      color: 0xFF0000
 
-If color property does not setted then random color from
+If you don`t set color property then random color from
 `material design palette <https://material.io/design/color/the-color-system.html#tools-for-picking-colors>`_
-would be applied.
+will be applied.
 
 *********
 Sub tasks
 *********
 
 It is possible to specify sub tasks for certain task
-using ``sub`` keyword. There are two ways how to do that.
+using ``sub`` keyword. There are two ways to do it.
 
-- If you want to create several tasks with one name
-  you need to use list sub tasks.
+- If you want to create several tasks with one name use **list sub tasks**.
 
-- If you want to create tasks with different names
-  you need to use dictionary sub tasks.
+- If you want to create tasks with different names use **dictionary sub tasks**.
 
 In both cases parent properties will be inherited for a child.
 
-Also it is possible to specify sub tasks for sub tasks.
+It is possible to specify sub tasks for sub tasks.
 
 
 List sub tasks
 ==============
 
-In yaml list elements start by minus symbol and one space after it.
+In YAML list elements start by minus symbol and one space after it.
 
 .. code-block:: yaml
    :linenos:
@@ -102,18 +102,18 @@ In yaml list elements start by minus symbol and one space after it.
         - date: 2020-01-20
           length: 4
         - date: 2020-02-10
-          color: 0x000000
+          color: 0x000000  # Black color
 
-For this example Linum would create 3 tasks.
-First of them starts at 2020-01-01,
-second starts at 2020-01-20 and has length 4,
+For this example Linum will create 3 tasks.
+First starts at 2020-01-01,
+second starts at 2020-01-20 and has length 4 days,
 and third starts at 2020-02-10 and has black color.
 
 
 Dictionary sub tasks
 ====================
 
-For every dictionary sub task title would be computed as
+For every **dictionary sub task** title would be computed as
 parent name plus sub task name.
 
 .. code-block:: yaml
