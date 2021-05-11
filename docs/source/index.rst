@@ -32,8 +32,9 @@ Welcome to Linum's documentation!
 
 Linum is a tool for tasks visualization — like Gantt chart, but more compact.
 
-Full documentation are `available here <https://chaberch-linum.readthedocs-hosted.com/>`_.
-Also there is the `GitHub project page <https://github.com/chabErch/Linum>`_.
+Full documentation `available here <https://chaberch-linum.readthedocs-hosted.com/>`_.
+
+Linum GitHub `project page <https://github.com/chabErch/Linum>`_.
 
 - :doc:`usage`
 - :doc:`creating_tasks`

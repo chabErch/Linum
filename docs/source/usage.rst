@@ -36,15 +36,15 @@ Here is the latest help info::
    Command line interface for linum.
 
    Options:
-     -o, --out PATH                  Output file.  If not specified then will
-                                     be new file in current directory.
+     -o, --out PATH                  Output file. If not specified then linum creates
+                                     new file in current directory.
      -r, --renderer [CONSOLE|TXT|XLSX]
                                      Renderer to use. 'CONSOLE' - for console
                                      printing. 'TXT' - for rendering txt file.
                                      'XLSX' - for rendering xlsx file. Default
                                      is 'CONSOLE'.
 
-     -c, --context PATH              Context for renderer. It is a yaml file
+     -c, --context PATH              Context for renderer. It is a YAML file
                                      with render settings.
 
      --help                          Show this message and exit. If not
@@ -81,7 +81,7 @@ and call ``.render()`` method. That`s all!
    er.render()
 
 
-If you have your yaml context file, just pass it after task path.
+If you have your yaml context file, provide valid path to it after task path.
 
 .. code-block:: python
 

@@ -2,7 +2,7 @@
 Creating context
 ================
 
-Context, like a `tasks <creating_tasks.html>`_, is a text file in yaml format
+Context, like `tasks <creating_tasks.html>`_, is a text file in YAML format
 (``.yaml`` extension).
 In context file you determine render period, style settings,
 list of workdays and list of days-off.
@@ -46,7 +46,7 @@ If you want specify day as day-off you must indicate it in ``days_off`` subsecti
      - 2020-01-02
      - 2020-01-03
 
-If you want specify certain Saturday or Sunday as working day
+If you want to indicate certain Saturday or Sunday as working day
 you must specify it in ``workdays`` subsection.
 
 .. code-block:: yaml
@@ -56,7 +56,7 @@ you must specify it in ``workdays`` subsection.
      - 2020-01-05
 
 
-If one date would be in both sections then ``workdays`` section would be in priority.
+If one date is in both sections then ``workdays`` section will be in priority.
 
 
 .. _render_period:
@@ -78,25 +78,25 @@ Render period
 ``start``
 =========
 
-Specify when period of view must begin.
+Specifies date when period of view begins.
 Value is date in format ``<year>-<month>-<day>``.
-If not indicated them Linum will consider it as today date.
+If not stated, then Linum will consider it as today date.
 
 
 ``length``
 ==========
 
-Specify when period of view must be over after ``start`` date.
+Specify when period of view is over after ``start`` date.
 Value must be integer.
 
 
 ``finish``
 ==========
 
-Specify when period of view must be over.
+Specify when period of view is over.
 Value is date in format ``<year>-<month>-<day>``.
-If both ``length`` and ``finish`` are specifying then
-``finish`` would be in priority.
+If both of ``length`` and ``finish`` are stated then
+``finish`` will be in priority.
 
 
 ``months_in_row``
@@ -111,7 +111,7 @@ Txt renderer
 ************
 
 ``txt_renderer`` section overrides period settings and specifies
-styles for both console and txt renderers.
+styles for console and txt renderers.
 
 You may override period settings specially for xlsx renderer.
 Use params from :ref:`render_period` section for it.
@@ -145,14 +145,14 @@ There are some border settings for txt renderer.
 ``inner_borders``
 -----------------
 
-Determines borders presence between days.
+Determines border presence between days.
 Value must be ``True`` or ``False``.
 
 
 ``month_inner_borders``
 -----------------------
 
-Determines borders presence between months.
+Determines border presence between months.
 Value must be ``True`` or ``False``.
 
 
@@ -184,7 +184,7 @@ To determine excel styles you need to use ``styles`` sub section.
 
 .. note::
 
-   Using ``styles`` subsection will be drop all default style settings.
+   Using ``styles`` subsection drops all default style settings.
 
    You can see default theme in ``linum/styles/xlsx_default_context.yaml`` file.
 
@@ -197,21 +197,21 @@ To determine excel styles you need to use ``styles`` sub section.
        font: Roboto
        cell_width_px: 30
 
-For this example new font and cell width would be apply to all cells.
+For this example new font and cell width would be applied to all cells.
 
-In ``styles`` section and all of it sub sections you may use params
-which be determine later.
+In ``styles`` section and all of it sub sections you may use params.
+Details of using this params will be provided :ref:`later <cell_size>`.
 
 If you want to determine cell style in certain hierarchy place
-you must use correspond subsections.
-There is 3 sub sections for ``styles`` sections:
+you must use correspond sub sections.
+There is 3 sub sections for ``styles`` section:
 
 - ``header`` to determine header style;
 
 - ``layers`` to determine layers styles;
 
-- ``days_off`` sub section which include another ``header`` and ``layers``
-  subsections, and need to determine cells in days-off positions.
+- ``days_off`` sub section includes ``header`` and ``layers`` subsections,
+  and need to determine cell styles in days-off positions.
 
 .. code-block:: yaml
 
@@ -286,7 +286,7 @@ The ``layers`` sections contain 3 sub sections:
            tasks:
              # some tasks styles for days-off
 
-.. note:: For ``days-off`` section all sub sections will be inherit correspond properties
+.. note:: For ``days-off`` section all sub sections inherit matching properties
    from ``styles`` section.
 
 For example:
@@ -304,8 +304,10 @@ For example:
            days:
              font_size: 16
 
-all days-off would be green.
+all days-off will be green.
 
+
+.. _cell_size:
 
 Cell size
 =========
@@ -355,25 +357,26 @@ Font size. Value must be integer.
 --------------
 
 Font color. Value must be integer constant color
-and ``auto`` for auto choosing between black and white color.
+or ``auto`` for auto choosing between black and white color.
+In second case color choose depends on background contrast.
 
 
 ``bold``
 --------
 
-Bold for font. Must be ``True`` or ``False``
+Sets font bold. Must be ``True`` or ``False``
 
 
 ``italic``
 ----------
 
-Italic for font. Must be ``True`` or ``False``
+Sets font italic. Must be ``True`` or ``False``
 
 
 ``underline``
 -------------
 
-Underline for font. Must be ``True`` or ``False``
+Sets font underline. Must be ``True`` or ``False``
 
 
 
@@ -417,9 +420,9 @@ Background color. Must be integer for constant color or ``Null`` for setting off
 Blackout
 ========
 
-Blackout is a changing color as mixing them with solid black with
+Blackout is changing color mixing it with solid black with
 ``blackout_value`` percents opacity.
-Blackout applies to background color and border colors.
+Blackout changes background color and border colors.
 
 Example:
 
@@ -440,7 +443,7 @@ Sets blackout for cell. Must be ``True`` or ``False``.
 ``blackout_value``
 ------------------
 
-Blackout value in percents. Must be float value between 0.0 and 1.0.
+Blackout value. Value must be in percents (float value between 0.0 and 1.0).
 
 
 .. _cell_borders:
@@ -484,7 +487,7 @@ The following shows the border styles:
 |    13 | SlantDash Dot | 2      |
 +-------+---------------+--------+
 
-Use index integer value to set border, or ``Null`` to set off border style.
+Use index integer value to set border, or ``Null`` to deactivate border style.
 
 Example:
 
@@ -506,16 +509,19 @@ Left border style. See style values here: :ref:`cell_borders`.
 
 ``right``
 ---------
+
 Right border style. See style values here: :ref:`cell_borders`.
 
 
 ``top``
 -------
+
 Top border style. See style values here: :ref:`cell_borders`.
 
 
 ``bottom``
 ----------
+
 Bottom border style. See style values here: :ref:`cell_borders`.
 
 
@@ -524,8 +530,8 @@ Bottom border style. See style values here: :ref:`cell_borders`.
 Border colors
 =============
 
-To set border color use integer values or ``blackout`` keyword.
-In second case border color would be setted as cell background with blackout.
+To set border color use hex rgb integer values or ``blackout`` keyword.
+In second case border color is equal cell background color with blackout.
 
 Example:
 
