@@ -54,3 +54,14 @@ class ExcelRendererContext(Context):
 
     def dict(self) -> dict:
         return vars(self)
+
+
+class SvgRendererContext(Context):
+
+    def __init__(self, **kwargs):
+        self.styles = Style()
+
+        self.days_off = []
+        self.workdays = []
+
+        super().__init__(**kwargs)
