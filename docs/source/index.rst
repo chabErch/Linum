@@ -19,8 +19,8 @@ Welcome to Linum's documentation!
    :alt: Linum logo
    :align: center
 
-.. image:: https://readthedocs.com/projects/chaberch-linum/badge/?version=latest&token=78b2cc17787db8f14e1038a6d8b054e9e6aaff80ea6706ac3990a9619969ee8c
-   :target: https://chaberch-linum.readthedocs-hosted.com/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/linum/badge/?version=latest
+   :target: https://linum.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
 .. image:: https://img.shields.io/pypi/l/ansicolortags.svg
@@ -32,7 +32,7 @@ Welcome to Linum's documentation!
 
 Linum is a tool for tasks visualization — like Gantt chart, but more compact.
 
-Full documentation `available here <https://chaberch-linum.readthedocs-hosted.com/>`_.
+Full documentation `available here <https://linum.readthedocs.io/>`_.
 
 Linum GitHub `project page <https://github.com/chabErch/Linum>`_.
 
