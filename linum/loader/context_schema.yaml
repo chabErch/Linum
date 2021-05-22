@@ -2,6 +2,7 @@ period: include('period', required=False)
 
 txt: include('txt_renderer', required=False)
 xlsx: include('excel_renderer', required=False)
+svg: include('svg_renderer', required=False)
 
 workdays: list(day(), required=False)
 days_off: list(day(), required=False)
@@ -14,6 +15,7 @@ period: &Period
   length: int(required=False)
   months_in_row: int(required=False)
 
+
 # Txt renderer ###############################################################
 
 txt_renderer:
@@ -23,6 +25,7 @@ txt_renderer:
   month_inner_borders: bool(required=False)
   left_border: bool(required=False)
   right_border: bool(required=False)
+
 
 # Excel renderer #############################################################
 
@@ -79,3 +82,48 @@ excel_styles:
 excel_renderer:
   <<: *Period
   styles: include('excel_styles', required=False)
+
+
+# Excel renderer #############################################################
+
+svg_raw_styles: &SvgRawStyles
+  style: str(required=False)
+
+svg_border: &SvgBorder
+  left: include('svg_linum_styles', required=False)
+  right: include('svg_linum_styles', required=False)
+  top: include('svg_linum_styles', required=False)
+  bottom: include('svg_linum_styles', required=False)
+
+svg_linum_styles: &SvgLinumStyles
+  <<: *SvgRawStyles
+  <<: *SvgBorder
+  align: enum('left', 'center', 'right', required=False)
+  valign: enum('top', 'vcenter', 'bottom', required=False)
+  height: int(required=False)
+
+svg_cell:
+  <<: *SvgLinumStyles
+  background: include('svg_linum_styles', required=False)
+  text: include('svg_linum_styles', required=False)
+  border: include('svg_border', required=False)
+
+svg_header:
+  <<: *SvgLinumStyles
+  months: include('svg_cell', required=False)
+  days: include('svg_cell', required=False)
+  weekdays: include('svg_cell', required=False)
+
+svg_days_off:
+  <<: *SvgLinumStyles
+  header: include('svg_header', required=False)
+
+svg_styles:
+  <<: *SvgLinumStyles
+  header: include('svg_header', required=False)
+  days_off: include('svg_days_off', required=False)
+
+svg_renderer:
+  <<: *Period
+  css: str(required=False)
+  styles: include('svg_styles', required=False)
