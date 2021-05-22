@@ -1,12 +1,13 @@
 import os
 from copy import copy
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 import yamale
 
-from linum.context import TxtRendererContext, ExcelRendererContext
-from linum.excel_renderer.base.style import Style
+from linum.context import TxtRendererContext, ExcelRendererContext, SvgRendererContext
+from linum.excel_renderer.base.style import Style as XlsxStyle
+from linum.svg_renderer.base.style import Style as SvgStyle
 from linum.task import Task
 
 DATA_SCHEMA_PATH = os.path.dirname(__file__) + "/data_schema.yaml"
@@ -114,8 +115,8 @@ class Loader:
 
         # ====================================================================
 
-        def _recursive(d: dict) -> Style:
-            style = Style(**d)
+        def _recursive(d: dict) -> XlsxStyle:
+            style = XlsxStyle(**d)
             for k, v in style.items():
                 if isinstance(v, dict):
                     s = _recursive(v)
@@ -138,7 +139,64 @@ class Loader:
         return ExcelRendererContext(**kwargs)
 
     @staticmethod
+    def load_svg_renderer_context(yaml_path: Optional[str] = None) -> SvgRendererContext:
+        # Upload schema
+        schema = yamale.make_schema(CONTEXT_SCHEMA_PATH)
+        # Upload all data
+        data = yamale.make_data(yaml_path)
+        # Validating
+        yamale.validate(schema, data)
+        data = data[0][0]
+
+        days_off_list = data.pop("days_off", [])
+        workdays_list = data.pop("workdays", [])
+
+        # ====================================================================
+
+        def _recursive(debug_name: str, d: dict) -> SvgStyle:
+            style = SvgStyle(debug_name, **d)
+            for k, v in style.items():
+                if isinstance(v, dict):
+                    s = _recursive(k, v)
+                    s.parents = [style]
+                    style.update({k: s})
+            return style
+
+        svg_renderer = data.pop("svg", {})
+        styles = _recursive(".", svg_renderer.pop("styles", {}))
+        styles = Loader._bind_styles(styles)
+
+        # ====================================================================
+
+        kwargs = {}
+        kwargs.update(data.get("period", {}))
+        kwargs.update(svg_renderer)
+        kwargs.update({"styles": styles, "days_off": days_off_list, "workdays": workdays_list})
+        return SvgRendererContext(**kwargs)
+
+    @staticmethod
     def load_default_xlsx_context() -> ExcelRendererContext:
         path = Path(__file__).parent.parent / "styles" / "xlsx_default_context.yaml"
         context = Loader.load_excel_renderer_context(str(path.absolute()))
         return context
+
+    @staticmethod
+    def _bind_styles(style: SvgStyle):
+        # Getting days-off style
+        style.setdefault("days_off", SvgStyle("days_off"))
+        days_off_style = style.pop("days_off")
+
+        def _recursive_bind(base_style: SvgStyle, style_to_set: SvgStyle) -> Tuple[SvgStyle, SvgStyle]:
+            for k, v in base_style.items():
+                if isinstance(v, SvgStyle):
+                    s = style_to_set.setdefault(k, SvgStyle("_" + k))
+                    s.parents.insert(0, v)
+                    _recursive_bind(v, s)
+            return base_style, style_to_set
+
+        # Binding
+        style, days_off_style = _recursive_bind(style, days_off_style)
+        style.update({"days_off": days_off_style})
+        return style
+
+
