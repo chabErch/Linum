@@ -1,0 +1,40 @@
+svg:
+  start: 2020-01-01
+  finish: 2020-05-01
+  months_in_row: 2
+  css: svg_default_style.css
+  locale: ru_RU
+  styles:
+    header:
+      months:
+        height: 40
+        align: center
+        valign: vcenter
+
+      days:
+        height: 16
+        valign: bottom
+        text:
+          valign: vcenter
+          align: center
+
+      weekdays:
+        height: 16
+        text:
+          valign: vcenter
+
+    layers:
+      indent: 20
+      tasks:
+        indent: 4
+        auto-font-color: True
+        height: 20
+        left: True
+        right: True
+        top: True
+        bottom: True
+        text:
+          align: left
+          padding-top: 1
+          padding-left: 3
+          padding-right: 3
