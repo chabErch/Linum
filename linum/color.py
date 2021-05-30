@@ -1,6 +1,7 @@
 import colorsys
 import random
 import re
+from copy import copy
 from typing import Union, Tuple, Set, Dict
 
 import wcag_contrast_ratio as contrast
@@ -95,3 +96,17 @@ class Color:
         v = max(0.0, v - blackout_value)
         self.r, self.g, self.b = self.from_h_s_v_percents(h, s, v).r_g_b
         return Color(self.rgb)
+
+    def get_contrast_font_color(self):
+        white_color = Color(0xFFFFFF)
+
+        dark_color = copy(self)
+        dark_color.apply_blackout(0.87)
+
+        # Calculating contrasts
+        dark_color_contrast = self.contrast(dark_color)
+        white_contrast = self.contrast(white_color)
+
+        # Choosing color with greater contrast
+        contrast_color = dark_color if dark_color_contrast > white_contrast else white_color
+        return contrast_color
