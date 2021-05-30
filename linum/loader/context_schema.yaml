@@ -84,16 +84,16 @@ excel_renderer:
   styles: include('excel_styles', required=False)
 
 
-# Excel renderer #############################################################
+# Svg renderer ###############################################################
 
 svg_raw_styles: &SvgRawStyles
   style: str(required=False)
 
 svg_border: &SvgBorder
-  left: include('svg_linum_styles', required=False)
-  right: include('svg_linum_styles', required=False)
-  top: include('svg_linum_styles', required=False)
-  bottom: include('svg_linum_styles', required=False)
+  left: bool(required=False)
+  right: bool(required=False)
+  top: bool(required=False)
+  bottom: bool(required=False)
 
 svg_linum_styles: &SvgLinumStyles
   <<: *SvgRawStyles
@@ -101,8 +101,12 @@ svg_linum_styles: &SvgLinumStyles
   align: enum('left', 'center', 'right', required=False)
   valign: enum('top', 'vcenter', 'bottom', required=False)
   height: int(required=False)
+  padding-left: int(required=False)
+  padding-top: int(required=False)
+  padding-right: int(required=False)
+  padding-bottom: int(required=False)
 
-svg_cell:
+svg_cell: &SvgCell
   <<: *SvgLinumStyles
   background: include('svg_linum_styles', required=False)
   text: include('svg_linum_styles', required=False)
@@ -114,16 +118,23 @@ svg_header:
   days: include('svg_cell', required=False)
   weekdays: include('svg_cell', required=False)
 
-svg_days_off:
-  <<: *SvgLinumStyles
-  header: include('svg_header', required=False)
+svg_tasks:
+  <<: *SvgCell
+  indent: int(required=False)
+  auto-font-color: bool(required=False)
+
+svg_layers:
+  indent: int(required=False)
+  tasks: include('svg_tasks', required=False)
 
 svg_styles:
   <<: *SvgLinumStyles
   header: include('svg_header', required=False)
-  days_off: include('svg_days_off', required=False)
+  layers: include('svg_layers', required=False)
 
 svg_renderer:
   <<: *Period
   css: str(required=False)
+  locale: str(required=False)
+  width: int(required=False)
   styles: include('svg_styles', required=False)
