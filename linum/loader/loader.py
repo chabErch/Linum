@@ -181,6 +181,12 @@ class Loader:
         return context
 
     @staticmethod
+    def load_default_svg_context() -> SvgRendererContext:
+        path = Path(__file__).parent.parent / "styles" / "svg_default_context.yaml"
+        context = Loader.load_svg_renderer_context(str(path.absolute()))
+        return context
+
+    @staticmethod
     def _bind_styles(style: SvgStyle):
         # Getting days-off style
         style.setdefault("days_off", SvgStyle("days_off"))
