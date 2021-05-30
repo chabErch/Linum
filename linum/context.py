@@ -1,3 +1,4 @@
+import tkinter
 from datetime import date, timedelta
 
 from linum.excel_renderer.base.style import Style
@@ -59,9 +60,13 @@ class ExcelRendererContext(Context):
 class SvgRendererContext(Context):
 
     def __init__(self, **kwargs):
-        self.styles = Style()
+        self.styles = Style(".")
 
         self.days_off = []
         self.workdays = []
+
+        self.locale = None
+        self.width = tkinter.Tk().winfo_screenwidth()
+        self.css = None
 
         super().__init__(**kwargs)
