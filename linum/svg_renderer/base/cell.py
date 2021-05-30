@@ -7,6 +7,7 @@ from svgwrite.path import Path
 from svgwrite.shapes import Rect
 from svgwrite.text import Text
 
+from linum.color import Color
 from linum.svg_renderer.base.style import Style
 
 
@@ -28,117 +29,208 @@ class Cell:
     def get_class(cls) -> str:
         return "cell"
 
-    @classmethod
-    def get_classes(cls) -> List[str]:
-        c = cls
-        l = [c.get_class()]
+    def get_classes(self) -> List[str]:
+        l = [self.get_class()] + self._extra_classes
+        c = type(self)
         while c is not Cell:
             c = c.__bases__[0]
             l.insert(0, c.get_class())
         return l
 
-    def render(self, drawing: Drawing, x: int, y: int):
-        # Background
-        bg_style = self.style.get_sub_style("background")
-        bg_height = bg_style.get("height", self.height)
-        bg_style.update({"height": None, "width": None, "x": None, "y": None})
-        bg_classes = " ".join(self.get_classes() + self._extra_classes + ["background"])
-        background = Rect(insert=(x, y), size=(self.width, bg_height),
-                          class_=bg_classes, debug=False, style=bg_style.get("style", ""))
+    def _render_background(self, drawing: Drawing, x: float, y: float):
+        # Style
+        style = self.style.get_sub_style("background")
+
+        # Color
+        color = Color(style.get("color", 0x000000))
+
+        # Classes
+        classes = " ".join(self.get_classes() + ["background"])
+
+        # Paddings
+        padding_left = style.get("padding-left", 0)
+        padding_right = style.get("padding-right", 0)
+        padding_top = style.get("padding-top", 0)
+        padding_bottom = style.get("padding-bottom", 0)
+
+        # Size
+        height = max(style.get("height", self.height) - padding_bottom - padding_top, 0)
+        width = max(self.width - padding_left - padding_right, 0)
+
+        # Rendering
+        background = Rect(insert=(x + padding_left, y + padding_top),
+                          size=(width, height),
+                          class_=classes, debug=False,
+                          style=style.get("style", "{}"), fill=str(color))
         drawing.add(background)
+        return background
 
-        # Clip mask
+    def _render_clip_mask(self, drawing: Drawing, rect: Rect):
+        # Generating id
         id_ = uuid4().hex
-        clip_path_style = " ".join(self.get_classes() + self._extra_classes + ["clip-mask"])
-        clip_path = ClipPath(style=clip_path_style, id=id_)
-        clip_path.add(background)
-        drawing.add(clip_path)
 
-        # Text
+        # Classes
+        classes = " ".join(self.get_classes() + ["clip-mask"])
+
+        # Paddings for text item
         text_style = self.style.get_sub_style("text")
-        text_classes = " ".join(self.get_classes() + self._extra_classes + ["text"])
+        padding_left = text_style.get("padding-left", 0)
+        padding_right = text_style.get("padding-right", 0)
+        padding_top = text_style.get("padding-top", 0)
+        padding_bottom = text_style.get("padding-bottom", 0)
+
+        # Size
+        x = rect.attribs["x"] + padding_left
+        y = rect.attribs["y"] + padding_top
+        width = max(rect.attribs["width"] - padding_left - padding_right, 0)
+        height = max(rect.attribs["height"] - padding_top - padding_bottom, 0)
+
+        # Updating rect
+        rect_ = rect.copy()
+        rect_.update({"x": x, "y": y, "width": width, "height": height})
+
+        # Rendering
+        clip_path = ClipPath(class_=classes, id=id_)
+        clip_path.add(rect_)
+        drawing.add(clip_path)
+        return clip_path
+
+    def _render_text(self, drawing: Drawing, clip_path: ClipPath):
+        rect = clip_path.elements[0]
+
+        # Style
+        text_style = self.style.get_sub_style("text")
+
+        # Classes
+        text_classes = " ".join(self.get_classes() + ["text"])
 
         # Setting text align
         align = text_style.get("align", "center")
         if align == "left":
-            tx = x
+            tx = rect.attribs["x"]
         elif align == "center":
-            tx = x + self.width / 2
+            tx = rect.attribs["x"] + rect.attribs["width"] / 2
         elif align == "right":
-            tx = x + self.width
+            tx = rect.attribs["x"] + rect.attribs["width"]
         else:
-            msg = "Incorrect align value for cell: '{}'".format(align)
+            msg = "Incorrect align value for cell: '{}'. " \
+                  "Must be 'left', 'center' or 'right'.".format(align)
             raise ValueError(msg)
 
         # Setting text valign
         valign = text_style.get("valign", "vcenter")
         if valign == "top":
-            ty = y
+            ty = rect.attribs["y"]
         elif valign == "vcenter":
-            ty = y + bg_height / 2
+            ty = rect.attribs["y"] + rect.attribs["height"] / 2
         elif valign == "bottom":
-            ty = y + bg_height
+            ty = rect.attribs["y"] + rect.attribs["height"]
         else:
-            msg = "Incorrect valign value for cell: '{}'".format(valign)
+            msg = "Incorrect valign value for cell: '{}'." \
+                  "Value must be 'top', 'vcenter' or 'bottom'".format(valign)
             raise ValueError(msg)
 
         # Text rendering
         text = Text(self.content, insert=(tx, ty), class_=text_classes, debug=False,
-                    style=text_style.get("style", ""), clip_path="url(#{})".format(id_))
+                    style=text_style.get("style", ""),
+                    clip_path="url(#{})".format(clip_path.attribs["id"]))
         drawing.add(text)
+        return text
+
+    def _render_l_border(self, drawing: Drawing, background: Rect):
+        # Style
+        style = self.style.get_sub_style("border").get_sub_style("left")
+
+        if style.get("left", False):
+            # Classes
+            classes = self.get_classes() + ["border"]
+
+            # Size
+            x = background.attribs["x"]
+            y = background.attribs["y"]
+            height = background.attribs["height"]
+
+            # Rendering
+            border = Path(["M", x, y, "L", x, y + height],
+                          class_=" ".join(classes + ["left"]),
+                          style=style.get("style", '{}'))
+            drawing.add(border)
+            return border
+
+    def _render_r_border(self, drawing: Drawing, background: Rect):
+        # Style
+        style = self.style.get_sub_style("border").get_sub_style("right")
+
+        if style.get("right", False):
+            # Classes
+            classes = self.get_classes() + ["border"]
+
+            # Size
+            x = background.attribs["x"] + background.attribs["width"]
+            y = background.attribs["y"]
+            height = background.attribs["height"]
+
+            # Rendering
+            border = Path(["M", x, y, "L", x, y + height],
+                          class_=" ".join(classes + ["right"]),
+                          style=style.get("style", '{}'))
+            drawing.add(border)
+            return border
+
+    def _render_t_border(self, drawing: Drawing, background: Rect):
+        # Style
+        style = self.style.get_sub_style("border").get_sub_style("top")
+
+        if style.get("top", False):
+            # Classes
+            classes = self.get_classes() + ["border"]
+
+            # Size
+            x = background.attribs["x"]
+            y = background.attribs["y"]
+            width = background.attribs["width"]
+
+            # Rendering
+            border = Path(["M", x, y, "L", x + width, y],
+                          class_=" ".join(classes + ["top"]),
+                          style=style.get("style", '{}'))
+            drawing.add(border)
+            return border
+
+    def _render_b_border(self, drawing: Drawing, background: Rect):
+        # Style
+        style = self.style.get_sub_style("border").get_sub_style("bottom")
+
+        if style.get("bottom", False):
+            # Classes
+            classes = self.get_classes() + ["border"]
+
+            # Size
+            x = background.attribs["x"]
+            y = background.attribs["y"] + background.attribs["height"]
+            width = background.attribs["width"]
+
+            # Rendering
+            border = Path(["M", x, y, "L", x + width, y],
+                          class_=" ".join(classes + ["bottom"]),
+                          style=style.get("style", '{}'))
+            drawing.add(border)
+            return border
+
+    def render(self, drawing: Drawing, x: float, y: float):
+        # Background
+        background = self._render_background(drawing, x, y)
+
+        # Clip mask
+        clip_path = self._render_clip_mask(drawing, background)
+
+        # Text
+        self._render_text(drawing, clip_path)
 
         # Borders
-        borders_style = self.style.get_sub_style("border")
-        border_classes = self.get_classes() + self._extra_classes + ["border"]
+        self._render_l_border(drawing, background)
+        self._render_r_border(drawing, background)
+        self._render_t_border(drawing, background)
+        self._render_b_border(drawing, background)
 
-        # Left border
-        l_border_style = borders_style.get_sub_style("left")
-        l_border_height = l_border_style.get("height", bg_height)
-        l_border_style.update({"x": None, "y": None, "height": None})
-        if l_border_style.get("left", False):
-            l_border_style.update({"left": None})
-            l_border_classes = " ".join(border_classes + ["left"])
-            l_border_style.update({"class_": l_border_classes})
-            l_border = Path(["M", x, y, "L", x, y + l_border_height],
-                            class_=l_border_classes,
-                            style=l_border_style.get("style", '""'))
-            drawing.add(l_border)
-
-        # Right border
-        r_border_style = borders_style.get_sub_style("right")
-        r_border_height = l_border_style.get("height", bg_height)
-        r_border_style.update({"x": None, "y": None, "height": None})
-        if r_border_style.get("right", False):
-            r_border_style.update({"right": None})
-            r_border_classes = " ".join(border_classes + ["right"])
-            r_border_style.update({"class_": r_border_classes})
-            r_border = Path(["M", x + self.width, y, "L", x + self.width, y + r_border_height],
-                            class_=r_border_classes,
-                            style=r_border_style.get("style", '""'))
-            drawing.add(r_border)
-
-        # Top border
-        t_border_style = borders_style.get_sub_style("top")
-        t_border_style.update({"x": None, "y": None, "height": None})
-        if t_border_style.get("top", False):
-            t_border_style.update({"top": None})
-            t_border_classes = " ".join(border_classes + ["top"])
-            t_border_style.update({"class_": t_border_classes})
-            t_border = Path(["M", x, y, "L", x + self.width, y],
-                            class_=t_border_classes,
-                            style=t_border_style.get("style", '""'))
-            drawing.add(t_border)
-
-        # Bottom border
-        b_border_style = borders_style.get_sub_style("bottom")
-        b_border_style.update({"x": None, "y": None, "height": None})
-        if b_border_style.get("bottom", False):
-            b_border_style.update({"bottom": None})
-            b_border_classes = " ".join(border_classes + ["bottom"])
-            b_border_style.update({"class_": b_border_classes})
-            b_border = Path(["M", x, y + l_border_height, "L", x + self.width, y + r_border_height],
-                            class_=b_border_classes,
-                            style=b_border_style.get("style", '""'))
-            drawing.add(b_border)
-
-        drawing.save(pretty=True)
+        # drawing.save(pretty=True)  # too slow to be here
