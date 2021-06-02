@@ -8,12 +8,25 @@ Welcome to Linum's documentation!
 =================================
 
 .. toctree::
-   :maxdepth: 3
-   :hidden:
+   :maxdepth: 1
 
    usage
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Tasks
+
    creating_tasks
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Context
+
    creating_context
+   renderers/txt_renderer
+   renderers/xlsx_renderer
+   renderers/svg_renderer
+
 
 .. image:: https://i.postimg.cc/rFWHwqwq/Artboard-1-0-5x.png
    :alt: Linum logo
@@ -62,13 +75,13 @@ Supported output formats
 - Console
 - Text (.txt)
 - Excel (.xlsx)
+- SVG (.svg)
 
 
 Coming soon output formats
 ==========================
 
 - HTML (.html)
-- SVG (.svg)
 - InDesign (.idml)
 
 
@@ -90,6 +103,14 @@ XLSX renderer
 .. image:: https://i.postimg.cc/NM7SbdJ0/image-2021-05-10-00-15-25.png
    :align: center
    :alt: XLSX renderer
+
+SVG renderer
+------------
+
+.. image:: https://i.postimg.cc/6psCNTzn/svg-renderer.png
+   :align: center
+   :alt: SVG renderer
+
 
 All the date titles correspond your language version of Excel.
 In this case all titles are shown in Russian locales.
