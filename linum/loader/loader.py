@@ -176,13 +176,13 @@ class Loader:
 
     @staticmethod
     def load_default_xlsx_context() -> ExcelRendererContext:
-        path = Path(__file__).parent.parent / "styles" / "xlsx_default_context.yaml"
+        path = Path(__file__).parent.parent / "styles" / "xlsx" / "xlsx_default_context.yaml"
         context = Loader.load_excel_renderer_context(str(path.absolute()))
         return context
 
     @staticmethod
     def load_default_svg_context() -> SvgRendererContext:
-        path = Path(__file__).parent.parent / "styles" / "svg_default_context.yaml"
+        path = Path(__file__).parent.parent / "styles" / "svg" / "svg_default_context.yaml"
         context = Loader.load_svg_renderer_context(str(path.absolute()))
         return context
 
