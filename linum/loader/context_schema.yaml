@@ -110,7 +110,6 @@ svg_cell: &SvgCell
   <<: *SvgLinumStyles
   background: include('svg_linum_styles', required=False)
   text: include('svg_linum_styles', required=False)
-  border: include('svg_border', required=False)
 
 svg_header:
   <<: *SvgLinumStyles
@@ -127,10 +126,14 @@ svg_layers:
   indent: int(required=False)
   tasks: include('svg_tasks', required=False)
 
+svg_grid:
+  <<: *SvgRawStyles
+
 svg_styles:
   <<: *SvgLinumStyles
   header: include('svg_header', required=False)
   layers: include('svg_layers', required=False)
+  grid: include('svg_grid', required=False)
 
 svg_renderer:
   <<: *Period
