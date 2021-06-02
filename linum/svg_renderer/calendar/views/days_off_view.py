@@ -56,4 +56,4 @@ class DaysOffView:
                             debug=False)
                 drawing.add(rect)
 
-        drawing.save(pretty=True)
+        # drawing.save(pretty=True)  # too slow to be here
