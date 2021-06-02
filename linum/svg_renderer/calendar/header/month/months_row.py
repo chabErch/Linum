@@ -30,5 +30,5 @@ class MonthsRow(Row):
         for d, length in months:
             mc = MonthCell(d, cell_width * length, self.style)
             mc.render(drawing, x + offset, y)
-            drawing.save(pretty=True)
             offset += cell_width * length
+            # drawing.save(pretty=True)  # too slow to be here
