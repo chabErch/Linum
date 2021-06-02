@@ -1,6 +1,6 @@
 svg:
   months_in_row: 2
-  css: svg_default_style.css
+  css: style.css
   styles:
     header:
       months:
