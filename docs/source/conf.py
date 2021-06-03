@@ -22,7 +22,7 @@ copyright = '2021, chaberch'
 author = 'chaberch'
 
 # The full version, including alpha/beta/rc tags
-release = '0.2.6'
+release = '0.9'
 
 # -- General configuration ---------------------------------------------------
 
@@ -54,6 +54,7 @@ html_theme_options = {
     'master_doc': True,
     'color_primary': 'indigo',
     'color_accent': 'amber',
+    'base_url': 'https://github.com/chabErch/Linum',
 }
 
 html_sidebars = {
