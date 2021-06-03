@@ -1,4 +1,8 @@
 
+.svg {
+    fill: #FF0000;
+}
+
 .text {
     dominant-baseline: mathematical;
     text-anchor: middle;
@@ -30,6 +34,14 @@
     opacity: 0.38;
     font-weight: bold;
 }
+
+
+/* Layers */
+
+.layer.background {
+    fill: #FFFFFF;
+}
+
 
 
 /* Borders */

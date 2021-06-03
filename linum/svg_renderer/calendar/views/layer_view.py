@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from typing import Optional, List
 
 from svgwrite import Drawing
+from svgwrite.shapes import Rect
 
 from linum.layer import Layer
 from linum.svg_renderer.base.style import Style
@@ -25,6 +26,14 @@ class LayerView:
         return self.style.get("height", 100)
 
     def render(self, drawing: Drawing, x: float, y: float):
+        # Rendering background
+        background = Rect(insert=(x, y),
+                          size=(self.width, self.height),
+                          class_=" ".join(["layer", "background"]),
+                          debug=False)
+        drawing.add(background)
+
+        # Rendering task parts
         cell_width = self.width / self.length
         for part in self.layer.parts:
             x_ = cell_width * (part.start - self.start).days

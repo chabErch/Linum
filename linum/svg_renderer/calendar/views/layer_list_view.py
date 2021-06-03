@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from typing import Optional
 
 from svgwrite import Drawing
+from svgwrite.shapes import Rect
 
 from linum.layer_list import LayerList
 from linum.svg_renderer.base.style import Style
@@ -29,11 +30,27 @@ class LayerListView:
         return len(self.layer_list.layers) * (layer_height + indent) + indent
 
     def render(self, drawing: Drawing, x: float, y: float):
+        # Rendering first indent
         indent = self.tasks_style.get("indent", 0)
+        indent_background = Rect(insert=(x, y),
+                                 size=(self.width, indent),
+                                 class_=" ".join(["layer", "indent", "background"]),
+                                 debug=False)
+        drawing.add(indent_background)
+
         y_ = y + indent
         for layer in self.layer_list.layers:
+            # Rendering layer
             lv = LayerView(layer, self.start, self.length, self.width, self.tasks_style)
             lv.render(drawing, x, y_)
+
+            # Rendering indent
+            indent_background = Rect(insert=(x, y_ + lv.height),
+                                     size=(self.width, indent),
+                                     class_=" ".join(["layer", "indent", "background"]),
+                                     debug=False)
+            drawing.add(indent_background)
+
             y_ += lv.height + indent
 
     def _trim_and_clean(self, layer_list: LayerList) -> LayerList:
