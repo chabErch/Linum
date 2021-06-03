@@ -24,11 +24,11 @@ Linum allows you to visualize your information on chosen time interval
 - Console
 - Text (.txt)
 - Excel (.xlsx)
+- SVG (.svg)
 
 ### Coming soon output formats
 
 - HTML (.html)
-- SVG (.svg)
 - InDesign (.idml)
 
 ## Render examples
@@ -41,9 +41,14 @@ Linum allows you to visualize your information on chosen time interval
 
 [![image-2021-05-10-00-15-25.png](https://i.postimg.cc/NM7SbdJ0/image-2021-05-10-00-15-25.png)](https://postimg.cc/hzv2t1qF)
 
+### SVG renderer
+
+[![svg-renderer.png](https://i.postimg.cc/6psCNTzn/svg-renderer.png)](https://postimg.cc/qzLNsJPv)
+
 ## Contributing
 
-For now Linum is ready to go for printing your tasks in console on a chosen time interval. Fell free to improve the project and develop any new output formats.
+For now Linum is ready to go for rendering your tasks in several formats on a chosen time interval.
+Feel free to improve the project and develop any new output formats.
 
 ## Author
 
