@@ -14,14 +14,14 @@ Use params from :ref:`render_period` section for it. For example:
      start: 2020-06-01
      finish: 2020-07-01
 
-To determine svg styles you need to use ``styles`` sub section and css style file.
+To determine svg styles you need to use ``styles`` sub section and css file.
 In ``styles`` sub section it is possible to determine some properties,
-that cannot be set with css.
+that can't be set in css.
 There are properties like cell size, padding and text align.
 
 .. note::
 
-   Using ``styles`` subsection drops all default style settings.
+   Using ``styles`` sub section drops all default style settings.
 
    You can see default theme in ``linum/styles/svg/svg_default_context.yaml`` file.
 
@@ -55,7 +55,7 @@ but you can set custom width:
    svg:
       width: 640
 
-Width property doesn't affect to height scale.
+Width value doesn't affect to height.
 
 
 ***
@@ -65,14 +65,15 @@ css
 Css (`Cascading Style Sheets`) - is a text file in which you describe the
 presentation of a structured document like svg or html.
 
-Every element of the generated svg has class tags
-through which this element can be referenced in css.
-For example cell with day date has tags ``cell``, ``header``, ``day`` and ``background``.
-So the referencing to this element will look like:
+Every element in the generated svg has class tags
+which can be used as references in css.
+For example cell with day date has tags
+``cell``, ``header``, ``day`` and ``background``.
+Referencing to this element will be:
 
 .. code-block:: css
 
-   cell.header.day.background {
+   .cell.header.day.background {
       fill: #FFFFFF;
    }
 
@@ -128,7 +129,7 @@ This style will have higher priority then styles from css file.
 Linum styles
 ============
 
-Linum styles is a set of style properties that cannot be set in css.
+Linum styles is a set of style properties that can't be set in css.
 
 For example text element has absolute but not relative coordinates.
 Setting align for text in css will have no effect.
@@ -204,7 +205,7 @@ To set align for text element you need to use both css and linum styles.
 With css style you set anchor point and
 with Linum styles you set aligning for this point.
 
-For example, if you need that your text will be in top right corner
+For example, if you need your text in top right corner
 you must write this in your context file:
 
 .. code-block:: yaml
@@ -213,13 +214,22 @@ you must write this in your context file:
       styles:
          align: right
          valign: top
-         style: "dominant-baseline: hanging;
-            text-anchor: end;"
+
+and this in your css:
+
+.. code-block:: css
+
+   .text {
+      dominant-baseline: hanging;
+      text-anchor: end;
+   }
 
 
-``align`` key sets horizontal align. Value must be one of: ``left``, ``center`` or ``right``.
+``align`` key sets horizontal align.
+Value must be one of: ``left``, ``center`` or ``right``.
 
-``valign`` key sets vertical align. Value must be one of: ``top``, ``vcenter`` or ``bottom``.
+``valign`` key sets vertical align.
+Value must be one of: ``top``, ``vcenter`` or ``bottom``.
 
 
 .. _cells_styles:
@@ -228,7 +238,7 @@ Cells styles
 ============
 
 Linum's calendar header consists of cells.
-Tasks is a cells too.
+Tasks are cells too.
 There are two keys for each cell:
 
 - ``background`` to determine background style;
@@ -256,7 +266,7 @@ Header
 
 In header section you may determine header style.
 All of :ref:`linum_styles` may be used in ``header`` section
-and in its sub sections.
+and in it's sub sections.
 
 There are three sub sections in ``header`` section:
 
@@ -288,7 +298,7 @@ Months, days and weekdays are cells. So you may use for them :ref:`cells_styles`
 Layers
 ======
 
-There is the ``layers`` sub section to determine styles settings of calendar layers.
+There is ``layers`` sub section to determine styles settings of calendar layers.
 
 To set indent between calendar layers use ``indent`` key:
 
