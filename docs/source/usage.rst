@@ -36,20 +36,19 @@ Here is the latest help info::
    Command line interface for linum.
 
    Options:
-     -o, --out PATH                  Output file. If not specified then linum creates
-                                     new file in current directory.
-     -r, --renderer [CONSOLE|TXT|XLSX]
-                                     Renderer to use. 'CONSOLE' - for console
-                                     printing. 'TXT' - for rendering txt file.
-                                     'XLSX' - for rendering xlsx file. Default
-                                     is 'CONSOLE'.
+    -o, --out PATH                  Output file. If not specified then linum
+                                    creates new file in current directory.
+    -r, --renderer [CONSOLE|TXT|XLSX|SVG]
+                                    Renderer to use. 'CONSOLE' - for console
+                                    printing. 'TXT' - for rendering txt file.
+                                    'XLSX' - for rendering xlsx file. 'SVG' -
+                                    for rendering svg file. Default is
+                                    'CONSOLE'.
+    -c, --context PATH              Context for renderer. It is YAML file with
+                                    render settings. If not specified then
+                                    default settings will be applied.
+    --help                          Show this message and exit.
 
-     -c, --context PATH              Context for renderer. It is a YAML file
-                                     with render settings.
-
-     --help                          Show this message and exit. If not
-                                     specified then default settings will be
-                                     applied.
 
 
 *************
@@ -79,6 +78,10 @@ and call ``.render()`` method. That`s all!
    # Xlsx output
    er = ExcelRenderer(TASKS_PATH)
    er.render()
+
+   # Svg output
+   sr = SvgRenderer(TASKS_PATH)
+   sr.render()
 
 
 If you have your yaml context file, provide valid path to it after task path.
