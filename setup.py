@@ -2,19 +2,23 @@ from os import path
 
 from setuptools import setup, find_packages
 
-import linum
-
 here = path.abspath(path.dirname(__file__))
 
+# Long description
 with open(path.join(here, "README.md")) as f:
     long_description = f.read()
 
+# Requirements
 with open(path.join(here, "requirements.txt")) as f:
     requirements = f.readlines()
 
+# Version
+with open(path.join(here, 'version.txt')) as f:
+    version = f.readline()
+
 setup(
     name='Linum',
-    version=linum.__version__,
+    version=version,
     packages=find_packages(exclude=["tests", "examples"]),
     package_data={"": ["*.yaml"]},
     url='https://github.com/chabErch/Linum',
