@@ -21,7 +21,6 @@ setup(
     version=version,
     packages=find_packages(exclude=["tests", "examples"]),
     package_data={"": ["*.yaml"]},
-    include_package_data=True,
     data_files=[('', ["requirements.txt", "version.txt"])],
     url='https://github.com/chabErch/Linum',
     license='MIT',
