@@ -7,27 +7,6 @@
 Welcome to Linum's documentation!
 =================================
 
-.. toctree::
-   :maxdepth: 1
-
-   usage
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Tasks
-
-   creating_tasks
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Context
-
-   creating_context
-   renderers/txt_renderer
-   renderers/xlsx_renderer
-   renderers/svg_renderer
-
-
 .. image:: https://i.postimg.cc/rFWHwqwq/Artboard-1-0-5x.png
    :alt: Linum logo
    :align: center
@@ -45,13 +24,7 @@ Welcome to Linum's documentation!
 
 Linum is a tool for tasks visualization — like Gantt chart, but more compact.
 
-Full documentation `available here <https://linum.readthedocs.io/>`_.
-
 Linum GitHub `project page <https://github.com/chabErch/Linum>`_.
-
-- :doc:`usage`
-- :doc:`creating_tasks`
-- :doc:`creating_context`
 
 
 ***********
@@ -130,4 +103,26 @@ Author
 ******
 
 - `Chaberch <https://github.com/chabErch>`_
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Usage
+
+   usage
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Tasks
+
+   creating_tasks
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Context
+
+   creating_context
+   renderers/txt_renderer
+   renderers/xlsx_renderer
+   renderers/svg_renderer
 
