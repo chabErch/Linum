@@ -9,6 +9,9 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, "README.md")) as f:
     long_description = f.read()
 
+with open(path.join(here, "requirements.txt")) as f:
+    requirements = f.readlines()
+
 setup(
     name='Linum',
     version=linum.__version__,
@@ -42,5 +45,6 @@ setup(
         'console_scripts': [
             'linum = linum.cli:cli',
         ],
-    }
+    },
+    install_requires=requirements,
 )

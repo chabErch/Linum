@@ -105,6 +105,10 @@ Author
 - `Chaberch <https://github.com/chabErch>`_
 
 
+****************
+Table of content
+****************
+
 .. toctree::
    :maxdepth: 1
    :caption: Usage
