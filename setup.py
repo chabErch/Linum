@@ -13,7 +13,7 @@ with open(path.join(here, "requirements.txt")) as f:
     requirements = f.readlines()
 
 # Version
-with open(path.join(here, 'version.txt')) as f:
+with open(path.join(here, "version.txt")) as f:
     version = f.readline()
 
 setup(
@@ -21,6 +21,8 @@ setup(
     version=version,
     packages=find_packages(exclude=["tests", "examples"]),
     package_data={"": ["*.yaml"]},
+    include_package_data=True,
+    data_files=[('', ["requirements.txt", "version.txt"])],
     url='https://github.com/chabErch/Linum',
     license='MIT',
     author='chaberch',
