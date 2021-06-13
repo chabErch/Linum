@@ -86,6 +86,8 @@ In Google Chrome you may press ``ctrl`` + ``shift`` + ``c`` to activate it.
 
    You can see default theme in ``linum/styles/svg/svg_default_style.css`` file.
 
+   Default value for `css` key is `DEFAULT_CSS`.
+
 After creating css file you can specify path to it for Linum:
 
 .. code-block:: yaml
