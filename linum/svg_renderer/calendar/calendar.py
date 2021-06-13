@@ -1,4 +1,5 @@
 from datetime import timedelta
+from pathlib import Path
 
 from svgwrite import Drawing
 from svgwrite.container import Style as CssStyle
@@ -24,7 +25,12 @@ class Calendar:
 
         # Adding css
         if self.context.css:
-            css = open(self.context.css, mode="rt", encoding="utf-8").read()
+            if self.context.css == "DEFAULT_CSS":
+                here = Path(__file__)
+                css_path = here.parent.parent.parent / "styles" / "svg" / "svg_default_style.css"
+                css = open(css_path, mode="rt", encoding="utf-8").read()
+            else:
+                css = open(self.context.css, mode="rt", encoding="utf-8").read()
             drawing.defs.add(CssStyle(css))
             drawing.save(pretty=True)
 
